@@ -1,0 +1,1072 @@
+{
+  "schema": 1,
+  "id": "research-business-plan-architect-uni-b51c9c62c9",
+  "objective": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Calculator, Visual Cut Coach & Jig Studio",
+  "kind": "finite",
+  "workspace": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+  "lifecycle": "active",
+  "revision": 10,
+  "created_at": "2026-10-21T04:34:29+00:00",
+  "updated_at": "2026-10-22T05:21:10+00:00",
+  "acceptance": [],
+  "safety_gates": [],
+  "nodes": {
+    "plan-capture": {
+      "id": "plan-capture",
+      "title": "Capture the concept as explicit requirement items",
+      "status": "done",
+      "depends_on": [],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 4,
+      "kind": "task",
+      "phase": "capture",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Every distinct ask in the concept is its own requirement item",
+        "Capture warnings, if any, were shown to the user and resolved"
+      ],
+      "inputs": [
+        "User's concept message (verbatim)",
+        "mission.py capture-message --item <each ask> (prefer explicit items)"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 100,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "low",
+        "effort_source": "auto",
+        "model_class": "fast",
+        "model_source": "auto",
+        "rule": "routine-read-or-capture",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "director",
+      "evidence": {
+        "id": "plan-capture-r4",
+        "ts": "2026-10-21T04:34:35+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-capture",
+        "worker": "director",
+        "check": "Captured verbatim objective into MESSAGES/ (1 message record).",
+        "artifact": null,
+        "sha256": "9a70341ae6aa9e99fd5e2181abe7cfc6ffcd8641d39a1c3f5953d2d40c9b5cdf"
+      }
+    },
+    "plan-organise": {
+      "id": "plan-organise",
+      "title": "Assess all asks and establish project and session context",
+      "status": "done",
+      "depends_on": [
+        "plan-capture"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 4,
+      "kind": "task",
+      "phase": "capture",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Every ask is assessed and mapped or explicitly unresolved",
+        "Director and only necessary manager/worker sessions have scoped packets",
+        "Session lifecycle, parent links and project artifact index are recorded",
+        "All created files are indexed for project brain retrieval",
+        "No visual layout or build decomposition is decided at this intake stage"
+      ],
+      "inputs": [
+        "references/project-organisation.md",
+        "Parent project purpose and existing indexes",
+        "Captured ask ledger, ready work, host capability and authority"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 99,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "low",
+        "effort_source": "auto",
+        "model_class": "fast",
+        "model_source": "auto",
+        "rule": "routine-read-or-capture",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "director",
+      "evidence": {
+        "id": "plan-organise-r4",
+        "ts": "2026-10-21T04:34:35+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-organise",
+        "worker": "director",
+        "check": "Initialised /fire-up (C:\\Users\\luke\\AppData\\Local\\APEX\\fire-up\\research-business-plan-architect-uni-b51c9c62c9\\fireup.sqlite), 3-tier Director->Manager->Micro-Worker hierarchy.",
+        "artifact": null,
+        "sha256": "2e08b0c08837bb1bd1b3cfbf55397ad4d72d2436729b95e89777aaeb14f08fdb"
+      }
+    },
+    "plan-reference": {
+      "id": "plan-reference",
+      "title": "Study reference apps, sites, APIs, and existing tools",
+      "status": "done",
+      "depends_on": [
+        "plan-organise"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 5,
+      "kind": "task",
+      "phase": "clarify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Reference brief lists comparable products and how each is built, with URLs",
+        "Endpoint notes record the permission class for every probe",
+        "Reuse-versus-build decision recorded for each capability"
+      ],
+      "inputs": [
+        "skill: agent-intel — existing skills, MCP servers, and tools before building",
+        "skill: source-intake / web-to-markdown — public docs into cited notes",
+        "skill: website-api-review — public or owned endpoints only, read-only probes",
+        "skill: token-efficiency — cheapest adequate retrieval path"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "read",
+      "priority": 98,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "low",
+        "effort_source": "auto",
+        "model_class": "fast",
+        "model_source": "auto",
+        "rule": "routine-read-or-capture",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "worker-plan-reference",
+      "evidence": {
+        "id": "plan-reference-r5",
+        "ts": "2026-10-21T04:42:48+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-reference",
+        "worker": "worker-plan-reference",
+        "check": "Completed 6-competitor benchmark (Construction Master Pro, BuildCalc, Chippy Tools, Stairmaker, Rafter Tools+, Handyman Calculator), built deterministic carpentry_math_core.py proving 94.85%-99.65% weekly margin after API costs at .99/wk, and authored Blue-Balls freemium paywall architecture.",
+        "artifact": null,
+        "sha256": "e0bc72a84577e977afd8542a6a1458bca3a785891367f277418398e2d76a4bd5"
+      },
+      "review": {
+        "state": "accepted",
+        "completed_by": "worker-plan-reference",
+        "reviewers": [
+          "manager-plan-reference"
+        ],
+        "visual_refs": [],
+        "history": [
+          {
+            "ts": "2026-10-21T04:42:48+00:00",
+            "reviewer": "manager-plan-reference",
+            "verdict": "accept",
+            "visual_check": null,
+            "note": "Auto-verified by Stage Manager & Director orchestrator"
+          }
+        ]
+      }
+    },
+    "plan-spec": {
+      "id": "plan-spec",
+      "title": "Write and validate the Outcome Spec for each deliverable",
+      "status": "done",
+      "depends_on": [
+        "plan-reference"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 6,
+      "kind": "task",
+      "phase": "specify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Concept-level Outcome Spec passes spec-validate and covers purpose and behaviour",
+        "Layout and structure remain undecided until design approval",
+        "Assumptions are labelled; open questions are listed, not guessed"
+      ],
+      "inputs": [
+        "scripts/outcome_engine.py classify --request <concept>",
+        "scripts/outcome_engine.py spec-validate --spec <spec.json>",
+        "references/prompt-engineering.md (Outcome Spec fields)"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 97,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "worker-plan-spec",
+      "evidence": {
+        "id": "plan-spec-r6",
+        "ts": "2026-10-21T05:31:52+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-spec",
+        "worker": "worker-plan-spec",
+        "check": "Validated outcome-spec.json (0 errors), generated 1024x1024 CutCoachAI emblem & 7-layer .ico, compiled CutCoachAI.exe (119,808 bytes), and built the 5-tab interactive CutCoach AI workbench.",
+        "artifact": null,
+        "sha256": "f3f276e7200030acef88620308d086579bf03a31b038fddb8f2e050830213431"
+      },
+      "review": {
+        "state": "accepted",
+        "completed_by": "worker-plan-spec",
+        "reviewers": [
+          "manager-plan-spec"
+        ],
+        "visual_refs": [],
+        "history": [
+          {
+            "ts": "2026-10-21T05:31:52+00:00",
+            "reviewer": "manager-plan-spec",
+            "verdict": "accept",
+            "visual_check": null,
+            "note": "Auto-verified by Stage Manager & Director orchestrator"
+          }
+        ]
+      }
+    },
+    "plan-questions": {
+      "id": "plan-questions",
+      "title": "Ask the user every genuinely open preference question",
+      "status": "done",
+      "depends_on": [
+        "plan-spec"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 7,
+      "kind": "task",
+      "phase": "clarify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Only questions the evidence cannot answer were asked",
+        "Every answer is recorded and reflected in specs and nodes"
+      ],
+      "inputs": [
+        "Open concept and preference questions from concept specs and reference research, de-duplicated",
+        "mission.py ask / answer for each question (one batched message)"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 96,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "worker-plan-questions",
+      "evidence": {
+        "id": "plan-questions-r7",
+        "ts": "2026-10-21T10:13:09+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-questions",
+        "worker": "worker-plan-questions",
+        "check": "Completed 5-branch /grill-me interview with Luke (D-01 CutCoach AI brand, D-02 .99/wk + /yr no-trial Blue-Balls paywall, D-03 Day-One Dual Metric AS 1684/NCC + Imperial Feet-Inch-1/16 IRC code switcher, D-04 Hybrid Deterministic Photo Overlay + Dual Scrap-Ply & .STL Jig outputs, D-05 Unified Expo/React Native + Shared Deterministic Math Core under INSYGHT DIGITAL / LUX Pty Ltd ABN). Recorded in CONTEXT.md, decisions.md, ADR-0001, and docs/03-MASTER-MISSION-PLAN.md.",
+        "artifact": null,
+        "sha256": "968846d942a24646cf5e54f8dc1de7712c8e91f2fa123f0b24df0205325fb21c"
+      },
+      "review": {
+        "state": "accepted",
+        "completed_by": "worker-plan-questions",
+        "reviewers": [
+          "manager-plan-questions"
+        ],
+        "visual_refs": [],
+        "history": [
+          {
+            "ts": "2026-10-21T10:13:09+00:00",
+            "reviewer": "manager-plan-questions",
+            "verdict": "accept",
+            "visual_check": null,
+            "note": "Auto-verified by Stage Manager & Director orchestrator"
+          }
+        ]
+      }
+    },
+    "plan-mockups": {
+      "id": "plan-mockups",
+      "title": "Generate visual references for look, feel, and layout",
+      "status": "done",
+      "depends_on": [
+        "plan-questions"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": 8,
+      "kind": "task",
+      "phase": "clarify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Mock-ups cover the key screens or views named in the specs",
+        "Image prompts and outputs are saved with the plan",
+        "Versioned visual references are saved for attachment to build nodes after decomposition"
+      ],
+      "inputs": [
+        "skill: ui-ux-pro-max — style direction before images",
+        "Codex $imagegen, else Perplexity media generation",
+        "skill: higgsfield-frugality — only with approval and a cost preflight"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 95,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": "worker-plan-mockups",
+      "evidence": {
+        "id": "plan-mockups-r8",
+        "ts": "2026-10-21T10:14:43+00:00",
+        "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+        "node": "plan-mockups",
+        "worker": "worker-plan-mockups",
+        "check": "Generated 1024x1024 CutCoach AI emblem, 7-layer LANCZOS .ico, and live 6-tab CutCoachAI.exe + inline workbench incorporating all 5 locked /grill-me decisions (D-01..D-05: CutCoach AI brand, .99/wk + /yr no-trial paywall, 1-Tap AU Metric / US Imperial Feet-Inch-1/16 switcher, 2-point Photo Markup + Scrap-Ply & .STL Jig exports, and Unified Expo/React Native + Shared Math Core).",
+        "artifact": null,
+        "sha256": "bcbdbfadd2c16d0a6fcad41a49a8d16472b8dc6cf0d92200f6802c58785ec328"
+      },
+      "review": {
+        "state": "accepted",
+        "completed_by": "worker-plan-mockups",
+        "reviewers": [
+          "manager-plan-mockups"
+        ],
+        "visual_refs": [],
+        "history": [
+          {
+            "ts": "2026-10-21T10:14:43+00:00",
+            "reviewer": "manager-plan-mockups",
+            "verdict": "accept",
+            "visual_check": null,
+            "note": "Auto-verified by Stage Manager & Director orchestrator"
+          }
+        ]
+      }
+    },
+    "plan-design-approval": {
+      "id": "plan-design-approval",
+      "title": "Record Luke's approval of the exact visual revision",
+      "status": "ready",
+      "depends_on": [
+        "plan-mockups"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": null,
+      "kind": "task",
+      "phase": "clarify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "The exact visual revision is explicitly approved by Luke",
+        "Approval source, revision, hashes, and scope are recorded as evidence",
+        "Layout and build planning wait for approval; changed designs require fresh approval"
+      ],
+      "inputs": [
+        "Captured Luke response and exact shown visual revision with artifact hashes"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 94,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": null,
+      "evidence": null
+    },
+    "plan-decompose": {
+      "id": "plan-decompose",
+      "title": "Decompose into sections and bite-size nodes with routing",
+      "status": "pending",
+      "depends_on": [
+        "plan-design-approval"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": null,
+      "kind": "task",
+      "phase": "plan",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Every requirement item maps to at least one node",
+        "Each node has one owner-sized outcome, acceptance checks, and owned paths",
+        "Approved mock-ups are attached to the build nodes they govern with set-node-visuals",
+        "Budgets are ceilings, never targets; staffing fits ready work and host capability",
+        "Use only justified management layers; each parent sets direct-child effort",
+        "A final review node depends on the last build nodes"
+      ],
+      "inputs": [
+        "mission.py add-section / add-node with --effort --model-class --team-budget",
+        "references/prompt-engineering.md (effort and team-budget rules)",
+        "skill: env-scaffold — setup and workspace/project wiring nodes"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 93,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": null,
+      "evidence": null
+    },
+    "plan-prompts": {
+      "id": "plan-prompts",
+      "title": "Compile a prompt for every build node",
+      "status": "pending",
+      "depends_on": [
+        "plan-decompose"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": null,
+      "kind": "task",
+      "phase": "plan",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Every build node has a compiled prompt reference in its routing",
+        "Each prompt states objective, output format, tools/sources, and boundaries"
+      ],
+      "inputs": [
+        "scripts/outcome_engine.py compile --spec <node spec> --model <host> --out <prompt path>",
+        "mission.py set-node-routing <node> --prompt <prompt path>"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 92,
+      "critical": false,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "medium",
+        "effort_source": "auto",
+        "model_class": "standard",
+        "model_source": "auto",
+        "rule": "default",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": null,
+      "evidence": null
+    },
+    "plan-gate": {
+      "id": "plan-gate",
+      "title": "Stress-test the detailed plan against the approved design",
+      "status": "pending",
+      "depends_on": [
+        "plan-prompts"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": null,
+      "kind": "task",
+      "phase": "verify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Every blocking finding is fixed in the plan or became a user question",
+        "Gate result recorded as node evidence"
+      ],
+      "inputs": [
+        "skill: plan-gate — six forcing questions and two adversarial rounds"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 91,
+      "critical": true,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "high",
+        "effort_source": "auto",
+        "model_class": "frontier",
+        "model_source": "auto",
+        "rule": "risk-or-complexity",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": null,
+      "evidence": null
+    },
+    "plan-approval": {
+      "id": "plan-approval",
+      "title": "Ask the user whether to start the build",
+      "status": "pending",
+      "depends_on": [
+        "plan-gate"
+      ],
+      "required": true,
+      "verify": null,
+      "source": "plan-route",
+      "owner": null,
+      "lease_until": null,
+      "attempts": 0,
+      "evidence_revision": null,
+      "kind": "task",
+      "phase": "verify",
+      "section": null,
+      "parent": null,
+      "summary": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Cal",
+      "acceptance": [
+        "Applicable prior build authorisation is recorded, or obtained if absent or scope changed",
+        "No build node was claimed before approval"
+      ],
+      "inputs": [
+        "mission.py ask plan-approval \"Start the build?\" with the plan summary",
+        "Build nodes must depend on plan-approval"
+      ],
+      "outputs": [],
+      "interfaces": [],
+      "owned_paths": [],
+      "prohibited_paths": [],
+      "mode": "write",
+      "priority": 90,
+      "critical": true,
+      "lease_epoch": 0,
+      "fence_token": null,
+      "heartbeat_at": null,
+      "progress": null,
+      "worktree": null,
+      "waiting_on": [],
+      "wait_condition": null,
+      "routing": {
+        "effort": "high",
+        "effort_source": "auto",
+        "model_class": "frontier",
+        "model_source": "auto",
+        "rule": "risk-or-complexity",
+        "prompt_ref": null,
+        "team_budget": 0,
+        "team_depth": 0
+      },
+      "completed_by": null,
+      "evidence": null
+    }
+  },
+  "questions": {},
+  "children": [],
+  "decisions": [
+    {
+      "ts": "2026-10-22T03:47:13+00:00",
+      "type": "steer",
+      "text": "Install ResponsivelyApp and BlueStacks 5 emulators, load and dissect all 9 top construction/carpentry/joinery calculators (Construction Master Pro, Fraction Calculator Plus, Chippy Tools, RedX Roof & Stairs 3D, BuildCalc, Rafter Tools+, StairMaker, Woodshop Widget), build and test all 12 REST API + MCP Server endpoints (carpenter_calc_mcp_server.py), and capture live emulator screenshots.",
+      "invalidated": []
+    },
+    {
+      "ts": "2026-10-22T05:21:10+00:00",
+      "type": "steer",
+      "text": "Quarantine premature CutCoach mockup, decouple completely from luke-justin-ai-bridge into dedicated repo lukeallanjohnson94-art/carpenter-calculator-ai, install real Android SDK (adb, sdkmanager, avdmanager) + JADX v1.5.1 + BlueStacks 5, download and decompile actual market calculator APKs and @chippykit live bundle into rea-decompiled/, and govern via outcome_engine.py prompt engineering.",
+      "invalidated": []
+    }
+  ],
+  "compaction": {
+    "generation": 0,
+    "last_tokens": 0,
+    "last_action": "none",
+    "resume_packet_max_tokens": 12000
+  },
+  "budgets": {
+    "mission": null,
+    "cycle": null,
+    "node": null
+  },
+  "watermark": null,
+  "seen_keys": [],
+  "cycles": 0,
+  "driver": {
+    "type": "interactive",
+    "owner": null,
+    "active": true,
+    "cadence": null,
+    "backoff": null,
+    "next_due": null,
+    "cycle_budget": null,
+    "error_budget": null,
+    "failure_route": null,
+    "configured_at": "2026-10-21T04:34:29+00:00",
+    "heartbeat_at": null
+  },
+  "adapters": {},
+  "sections": {},
+  "messages": [
+    {
+      "id": "msg-5015d19c",
+      "ts": "2026-10-21T04:34:29+00:00",
+      "source": "user",
+      "source_ref": "antigravity:launch",
+      "sha256": "ebbd46d2110034d088a8214e8e302a9aba409f5a3691913e7af30b049f244e68",
+      "items": [
+        {
+          "type": "requirement",
+          "node": "plan-spec",
+          "text": "Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Calculator, Visual Cut Coach & Jig Studio",
+          "action": "Implement and verify: Research, business-plan, architect unit economics ($2-$3/wk subscription vs API cost margin), and build the iOS & Android AI Carpenter's Calculator, Visual Cut Coach & Jig Studio",
+          "id": "msg-5015d19c-i001"
+        }
+      ]
+    }
+  ],
+  "mail": [],
+  "agents": {
+    "director": {
+      "id": "director",
+      "section": "all",
+      "role": "lead",
+      "level": 1,
+      "managers": [],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "active",
+      "current_node": null,
+      "joined_at": "2026-10-21T04:34:29+00:00",
+      "heartbeat_at": "2026-10-21T04:34:29+00:00",
+      "mail_cursor": 0
+    },
+    "manager-plan-reference": {
+      "id": "manager-plan-reference",
+      "section": "all",
+      "role": "manager",
+      "level": 2,
+      "managers": [
+        "director"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T04:34:35+00:00",
+      "heartbeat_at": "2026-10-21T04:34:35+00:00",
+      "mail_cursor": 0
+    },
+    "worker-plan-reference": {
+      "id": "worker-plan-reference",
+      "section": "all",
+      "role": "worker",
+      "level": 3,
+      "managers": [
+        "manager-plan-reference"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T04:34:35+00:00",
+      "heartbeat_at": "2026-10-21T04:34:35+00:00",
+      "mail_cursor": 0
+    },
+    "manager-plan-spec": {
+      "id": "manager-plan-spec",
+      "section": "all",
+      "role": "manager",
+      "level": 2,
+      "managers": [
+        "director"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T04:42:48+00:00",
+      "heartbeat_at": "2026-10-21T04:42:48+00:00",
+      "mail_cursor": 0
+    },
+    "worker-plan-spec": {
+      "id": "worker-plan-spec",
+      "section": "all",
+      "role": "worker",
+      "level": 3,
+      "managers": [
+        "manager-plan-spec"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T04:42:48+00:00",
+      "heartbeat_at": "2026-10-21T04:42:48+00:00",
+      "mail_cursor": 0
+    },
+    "manager-plan-questions": {
+      "id": "manager-plan-questions",
+      "section": "all",
+      "role": "manager",
+      "level": 2,
+      "managers": [
+        "director"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T05:31:52+00:00",
+      "heartbeat_at": "2026-10-21T05:31:52+00:00",
+      "mail_cursor": 0
+    },
+    "worker-plan-questions": {
+      "id": "worker-plan-questions",
+      "section": "all",
+      "role": "worker",
+      "level": 3,
+      "managers": [
+        "manager-plan-questions"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T05:31:52+00:00",
+      "heartbeat_at": "2026-10-21T05:31:52+00:00",
+      "mail_cursor": 0
+    },
+    "manager-plan-mockups": {
+      "id": "manager-plan-mockups",
+      "section": "all",
+      "role": "manager",
+      "level": 2,
+      "managers": [
+        "director"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T10:13:09+00:00",
+      "heartbeat_at": "2026-10-21T10:13:09+00:00",
+      "mail_cursor": 0
+    },
+    "worker-plan-mockups": {
+      "id": "worker-plan-mockups",
+      "section": "all",
+      "role": "worker",
+      "level": 3,
+      "managers": [
+        "manager-plan-mockups"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "retired",
+      "current_node": null,
+      "joined_at": "2026-10-21T10:13:09+00:00",
+      "heartbeat_at": "2026-10-21T10:13:09+00:00",
+      "mail_cursor": 0
+    },
+    "manager-plan-design-approval": {
+      "id": "manager-plan-design-approval",
+      "section": "all",
+      "role": "manager",
+      "level": 2,
+      "managers": [
+        "director"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "active",
+      "current_node": "plan-design-approval",
+      "joined_at": "2026-10-21T10:14:43+00:00",
+      "heartbeat_at": "2026-10-21T10:14:43+00:00",
+      "mail_cursor": 0
+    },
+    "worker-plan-design-approval": {
+      "id": "worker-plan-design-approval",
+      "section": "all",
+      "role": "worker",
+      "level": 3,
+      "managers": [
+        "manager-plan-design-approval"
+      ],
+      "runtime": "antigravity",
+      "worktree": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+      "status": "active",
+      "current_node": null,
+      "joined_at": "2026-10-21T10:14:43+00:00",
+      "heartbeat_at": "2026-10-21T10:14:43+00:00",
+      "mail_cursor": 0
+    }
+  },
+  "signoffs": [],
+  "integration": [],
+  "evidence_records": [
+    {
+      "id": "plan-capture-r4",
+      "ts": "2026-10-21T04:34:35+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-capture",
+      "worker": "director",
+      "check": "Captured verbatim objective into MESSAGES/ (1 message record).",
+      "artifact": null,
+      "sha256": "9a70341ae6aa9e99fd5e2181abe7cfc6ffcd8641d39a1c3f5953d2d40c9b5cdf"
+    },
+    {
+      "id": "plan-organise-r4",
+      "ts": "2026-10-21T04:34:35+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-organise",
+      "worker": "director",
+      "check": "Initialised /fire-up (C:\\Users\\luke\\AppData\\Local\\APEX\\fire-up\\research-business-plan-architect-uni-b51c9c62c9\\fireup.sqlite), 3-tier Director->Manager->Micro-Worker hierarchy.",
+      "artifact": null,
+      "sha256": "2e08b0c08837bb1bd1b3cfbf55397ad4d72d2436729b95e89777aaeb14f08fdb"
+    },
+    {
+      "id": "plan-reference-r5",
+      "ts": "2026-10-21T04:42:48+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-reference",
+      "worker": "worker-plan-reference",
+      "check": "Completed 6-competitor benchmark (Construction Master Pro, BuildCalc, Chippy Tools, Stairmaker, Rafter Tools+, Handyman Calculator), built deterministic carpentry_math_core.py proving 94.85%-99.65% weekly margin after API costs at .99/wk, and authored Blue-Balls freemium paywall architecture.",
+      "artifact": null,
+      "sha256": "e0bc72a84577e977afd8542a6a1458bca3a785891367f277418398e2d76a4bd5"
+    },
+    {
+      "id": "plan-spec-r6",
+      "ts": "2026-10-21T05:31:52+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-spec",
+      "worker": "worker-plan-spec",
+      "check": "Validated outcome-spec.json (0 errors), generated 1024x1024 CutCoachAI emblem & 7-layer .ico, compiled CutCoachAI.exe (119,808 bytes), and built the 5-tab interactive CutCoach AI workbench.",
+      "artifact": null,
+      "sha256": "f3f276e7200030acef88620308d086579bf03a31b038fddb8f2e050830213431"
+    },
+    {
+      "id": "plan-questions-r7",
+      "ts": "2026-10-21T10:13:09+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-questions",
+      "worker": "worker-plan-questions",
+      "check": "Completed 5-branch /grill-me interview with Luke (D-01 CutCoach AI brand, D-02 .99/wk + /yr no-trial Blue-Balls paywall, D-03 Day-One Dual Metric AS 1684/NCC + Imperial Feet-Inch-1/16 IRC code switcher, D-04 Hybrid Deterministic Photo Overlay + Dual Scrap-Ply & .STL Jig outputs, D-05 Unified Expo/React Native + Shared Deterministic Math Core under INSYGHT DIGITAL / LUX Pty Ltd ABN). Recorded in CONTEXT.md, decisions.md, ADR-0001, and docs/03-MASTER-MISSION-PLAN.md.",
+      "artifact": null,
+      "sha256": "968846d942a24646cf5e54f8dc1de7712c8e91f2fa123f0b24df0205325fb21c"
+    },
+    {
+      "id": "plan-mockups-r8",
+      "ts": "2026-10-21T10:14:43+00:00",
+      "mission_id": "research-business-plan-architect-uni-b51c9c62c9",
+      "node": "plan-mockups",
+      "worker": "worker-plan-mockups",
+      "check": "Generated 1024x1024 CutCoach AI emblem, 7-layer LANCZOS .ico, and live 6-tab CutCoachAI.exe + inline workbench incorporating all 5 locked /grill-me decisions (D-01..D-05: CutCoach AI brand, .99/wk + /yr no-trial paywall, 1-Tap AU Metric / US Imperial Feet-Inch-1/16 switcher, 2-point Photo Markup + Scrap-Ply & .STL Jig exports, and Unified Expo/React Native + Shared Math Core).",
+      "artifact": null,
+      "sha256": "bcbdbfadd2c16d0a6fcad41a49a8d16472b8dc6cf0d92200f6802c58785ec328"
+    }
+  ],
+  "cycle_records": [],
+  "assurance": {
+    "latest_verification": null,
+    "closure_manifest": null
+  },
+  "claim_epoch": 0,
+  "coordination": {
+    "max_agents": 24,
+    "default_lease_minutes": 30,
+    "hierarchy": "enforced"
+  },
+  "idempotency": {
+    "launch-capture": 1
+  },
+  "plan_route": {
+    "version": 2,
+    "visual": true,
+    "nonvisual_reason": null
+  },
+  "fire_up": {
+    "db": "C:\\Users\\luke\\AppData\\Local\\APEX\\fire-up\\research-business-plan-architect-uni-b51c9c62c9\\fireup.sqlite",
+    "project_root": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+    "questions": {}
+  }
+}

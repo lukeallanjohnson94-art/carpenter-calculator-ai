@@ -1,0 +1,110 @@
+{
+  "v5_mode_1_cutcoach_pro.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 836,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 837,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  },
+  "v5_mode_2_cmpro_4065.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 836,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 837,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  },
+  "v5_mode_3_fraction_plus.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  },
+  "v5_mode_4_chippy_tools_au.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  },
+  "v5_mode_5_redx_3d.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  },
+  "v5_mode_6_paywall_and_ad_removal.png": {
+    "ios": {
+      "screenBottom": 882,
+      "tabbarTop": 840,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    },
+    "android": {
+      "screenBottom": 883,
+      "tabbarTop": 841,
+      "lastKeyBottom": 0,
+      "lastKeyText": "ENTER =",
+      "keyCount": 49,
+      "clipped": false
+    }
+  }
+}

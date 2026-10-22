@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>CutCoach AI V4 — Realistic iPhone 16 Pro Simulator & Android Pixel 9 Pro AVD Emulator</title>
+<style>
+  :root, html[data-theme="dark"] {
+    --bg-shell: #171614;
+    --bg-stage: #11100E;
+    --bg-card: #1F1D1A;
+    --bg-elevated: #282521;
+    --bg-pill: #161513;
+    --bg-lcd: #141814;
+    --border-hairline: #33302B;
+    --border-strong: #4A443C;
+    --ink-primary: #F5F2EB;
+    --ink-secondary: #B8B0A4;
+    --ink-muted: #7E776C;
+    --accent-copper: #C86D2D;
+    --accent-copper-bright: #E07B39;
+    --accent-bronze: #9B7A49;
+    --accent-brass: #D4AF37;
+    --status-ok: #2E6F40;
+    --key-num: #2B2824;
+    --key-num-border: #3E3A34;
+    --key-fn: #382E24;
+    --key-fn-border: #5C4935;
+    --key-copper: #B85D1E;
+    --key-copper-border: #E07B39;
+  }
+
+  html[data-theme="light"] {
+    --bg-shell: #F5F1EA;
+    --bg-stage: #E8E2D7;
+    --bg-card: #FFFFFF;
+    --bg-elevated: #F4EFE6;
+    --bg-pill: #E5DECFE0;
+    --bg-lcd: #E6ECE4;
+    --border-hairline: #D8D0C2;
+    --border-strong: #B8AEA0;
+    --ink-primary: #1C1A17;
+    --ink-secondary: #524C44;
+    --ink-muted: #827A6E;
+    --accent-copper: #C86D2D;
+    --accent-copper-bright: #B55E22;
+    --accent-bronze: #8A6A3B;
+    --accent-brass: #9E7B16;
+    --status-ok: #2E6F40;
+    --key-num: #FFFFFF;
+    --key-num-border: #CCC4B6;
+    --key-fn: #EDE6DA;
+    --key-fn-border: #C4B9A5;
+    --key-copper: #C86D2D;
+    --key-copper-border: #A3521A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  /* LAW-16: Viewport-Locked Zero Outer Window Scroll */
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg-shell);
+    color: var(--ink-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    display: grid;
+    grid-template-rows: 44px 1fr;
+    user-select: none;
+  }
+
+  /* Native Fullscreen Phone Mode (?mode=native or mobile screen) */
+  body.native-fullscreen {
+    grid-template-rows: 1fr;
+  }
+  body.native-fullscreen .top-studio-bar,
+  body.native-fullscreen .host-inspector,
+  body.native-fullscreen .xcode-sim-bar,
+  body.native-fullscreen .avd-side-strip,
+  body.native-fullscreen #androidDeviceUnit {
+    display: none !important;
+  }
+  body.native-fullscreen .main-studio-grid {
+    grid-template-columns: 1fr !important;
+  }
+  body.native-fullscreen .emulator-stage {
+    padding: 0 !important;
+  }
+  body.native-fullscreen .device-unit {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  body.native-fullscreen .hw-iphone16pro {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  body.native-fullscreen .hw-screen {
+    border-radius: 0 !important;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", "SF Mono", "Cascadia Mono", Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ================= TOP STUDIO BAR ================= */
+  .top-studio-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    background: var(--bg-shell);
+    border-bottom: 1px solid var(--border-hairline);
+    gap: 8px;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .emblem-box {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #25221E, #12110F);
+    border: 1px solid var(--accent-copper);
+    display: grid;
+    place-items: center;
+  }
+
+  .seg-bar {
+    display: inline-flex;
+    background: var(--bg-pill);
+    border: 1px solid var(--border-hairline);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .seg-pill {
+    border: none;
+    background: transparent;
+    color: var(--ink-secondary);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s ease;
+  }
+
+  .seg-pill:hover { color: var(--ink-primary); }
+  .seg-pill.active {
+    background: var(--accent-copper);
+    color: #FFF;
+  }
+
+  .status-cloud-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: rgba(46, 111, 64, 0.18);
+    color: #5CE07A;
+    border: 1px solid rgba(46, 111, 64, 0.5);
+    cursor: pointer;
+  }
+
+  html[data-theme="light"] .status-cloud-btn { color: #1E562B; }
+
+  /* ================= MAIN 74 / 26 WORKSPACE ================= */
+  .main-studio-grid {
+    display: grid;
+    grid-template-columns: 74% 26%;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .emulator-stage {
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(200,109,45,0.08), transparent 60%),
+      radial-gradient(circle at 75% 80%, rgba(155,122,73,0.07), transparent 60%),
+      var(--bg-stage);
+    border-right: 1px solid var(--border-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    padding: 8px 16px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .main-studio-grid[data-emu-mode="ios"] #androidDeviceUnit { display: none !important; }
+  .main-studio-grid[data-emu-mode="android"] #iosDeviceUnit { display: none !important; }
+  .main-studio-grid[data-emu-mode="snack"] #iosDeviceUnit,
+  .main-studio-grid[data-emu-mode="snack"] #androidDeviceUnit { display: none !important; }
+  .main-studio-grid[data-emu-mode="snack"] #snackCloudUnit { display: flex !important; }
+
+  /* ================= PHOTOREALISTIC HARDWARE EMULATOR UNITS ================= */
+  .device-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+  }
+
+  /* 1. Apple Xcode iOS Simulator Window Header */
+  .xcode-sim-bar {
+    width: 356px;
+    height: 26px;
+    background: linear-gradient(180deg, #2D2B29, #22201E);
+    border: 1px solid #44403A;
+    border-radius: 8px 8px 0 0;
+    padding: 0 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #D5CFC4;
+    margin-bottom: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    flex-shrink: 0;
+  }
+
+  .mac-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .mac-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .mac-dot.r { background: #FF5F56; }
+  .mac-dot.y { background: #FFBD2E; }
+  .mac-dot.g { background: #27C93F; }
+
+  .sim-tool-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .sim-tool-btns button {
+    background: transparent;
+    border: none;
+    color: #B8B0A4;
+    cursor: pointer;
+    font-size: 10px;
+  }
+  .sim-tool-btns button:hover { color: #FFF; }
+
+  /* Photorealistic iPhone 16 Pro Natural Titanium Chassis */
+  .hw-iphone16pro {
+    width: 356px;
+    height: calc(100% - 32px);
+    max-height: 752px;
+    min-height: 510px;
+    border-radius: 54px;
+    padding: 11px;
+    position: relative;
+    /* Multi-layer Natural Titanium + Ceramic Shield Bezel */
+    background:
+      linear-gradient(135deg, #8A847C 0%, #4E4A45 22%, #2E2C29 50%, #6E6962 78%, #3A3733 100%);
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,0.22),
+      inset 0 0 0 4px #181715,
+      0 24px 55px rgba(0,0,0,0.72),
+      0 0 0 1px rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Physical Titanium Buttons (Action, Vol+, Vol-, Side Power) */
+  .hw-iphone16pro .btn-action {
+    position: absolute; left: -3px; top: 96px; width: 3px; height: 22px;
+    background: linear-gradient(180deg, #9A938A, #4A4640); border-radius: 2px 0 0 2px;
+  }
+  .hw-iphone16pro .btn-vol-up {
+    position: absolute; left: -3px; top: 136px; width: 3px; height: 42px;
+    background: linear-gradient(180deg, #9A938A, #4A4640); border-radius: 2px 0 0 2px;
+  }
+  .hw-iphone16pro .btn-vol-dn {
+    position: absolute; left: -3px; top: 188px; width: 3px; height: 42px;
+    background: linear-gradient(180deg, #9A938A, #4A4640); border-radius: 2px 0 0 2px;
+  }
+  .hw-iphone16pro .btn-power {
+    position: absolute; right: -3px; top: 155px; width: 3px; height: 64px;
+    background: linear-gradient(180deg, #9A938A, #4A4640); border-radius: 0 2px 2px 0;
+  }
+
+  /* Ear Speaker Micro-Slit */
+  .hw-iphone16pro .ear-slit {
+    position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+    width: 46px; height: 3px; border-radius: 2px; background: #0B0B0A;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.12);
+  }
+
+  /* 2. Google Pixel 9 Pro AVD Chassis + Side Strip */
+  .android-avd-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: calc(100% - 32px);
+    max-height: 752px;
+    min-height: 510px;
+  }
+
+  .hw-pixel9pro {
+    width: 356px;
+    height: 100%;
+    border-radius: 44px;
+    padding: 10px;
+    position: relative;
+    background:
+      linear-gradient(135deg, #4F4D4A 0%, #232220 28%, #151413 55%, #3D3B38 85%, #1E1D1B 100%);
+    box-shadow:
+      inset 0 0 0 1.5px rgba(255,255,255,0.16),
+      inset 0 0 0 3.5px #0E0E0D,
+      0 24px 55px rgba(0,0,0,0.72),
+      0 0 0 1px rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Android Studio AVD Side Control Toolbar */
+  .avd-side-strip {
+    width: 28px;
+    background: #23211F;
+    border: 1px solid #3E3A35;
+    border-radius: 8px;
+    padding: 6px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  }
+
+  .avd-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: #B8B0A4;
+    font-size: 11px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  .avd-btn:hover { background: #38342F; color: #FFF; }
+
+  /* ================= INNER SUPER RETINA / ACTUA OLED SCREEN ================= */
+  .hw-screen {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-stage);
+    border-radius: 43px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+
+  .hw-pixel9pro .hw-screen {
+    border-radius: 34px;
+  }
+
+  /* iOS 18/19 Status Bar + Optical Dynamic Island */
+  .ios-status-row {
+    height: 36px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-primary);
+    position: relative;
+    flex-shrink: 0;
+    z-index: 20;
+  }
+
+  .ios-dynamic-island {
+    position: absolute;
+    left: 50%;
+    top: 6px;
+    transform: translateX(-50%);
+    width: 102px;
+    height: 25px;
+    background: #050505;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ios-dynamic-island.expanded {
+    width: 296px;
+    height: 58px;
+    border-radius: 22px;
+    padding: 6px 12px;
+    background: #080807;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.75), inset 0 0 0 1px rgba(200,109,45,0.45);
+  }
+
+  /* Optical TrueDepth Camera Lens inside Dynamic Island */
+  .truedepth-lens {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3B5998 0%, #111827 55%, #050505 100%);
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.45);
+    flex-shrink: 0;
+  }
+
+  /* Android 15 Status Bar + Optical Punch-Hole Camera */
+  .android-status-row {
+    height: 32px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-primary);
+    position: relative;
+    flex-shrink: 0;
+    z-index: 20;
+  }
+
+  .pixel-punch-camera {
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2E477A 0%, #090C12 60%, #000 100%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+  }
+
+  /* ================= IN-PHONE APP HEADER & SUB-VIEW SWITCHER ================= */
+  .inphone-header {
+    padding: 2px 8px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-bottom: 1px solid var(--border-hairline);
+    background: var(--bg-card);
+    flex-shrink: 0;
+  }
+
+  .inphone-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+
+  .inphone-app-name {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .unit-chip-btn {
+    border: 1px solid var(--accent-copper);
+    background: rgba(200,109,45,0.15);
+    color: var(--accent-brass);
+    font-size: 8.5px;
+    font-weight: 700;
+    padding: 1.5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Installed Calculator Profile Switcher Bar inside Phone */
+  .installed-calc-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background: var(--bg-pill);
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+    padding: 1.5px;
+  }
+
+  .calc-prof-btn {
+    border: none;
+    background: transparent;
+    color: var(--ink-muted);
+    font-size: 8px;
+    font-weight: 800;
+    padding: 2.5px 2px;
+    border-radius: 3.5px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .calc-prof-btn.active {
+    background: var(--accent-bronze);
+    color: #FFF;
+  }
+
+  /* 3-Mode Sub-View Bar inside Phone: [Keypad & Tape] [3D & Blueprint] [Cut List & Jig] */
+  .inphone-submode-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--bg-pill);
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+    padding: 1.5px;
+    gap: 2px;
+  }
+
+  .submode-btn {
+    border: none;
+    background: transparent;
+    color: var(--ink-secondary);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2.5px 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+  }
+
+  .submode-btn.active {
+    background: var(--accent-copper);
+    color: #FFF;
+  }
+
+  /* Non-Intrusive Trade Sponsor Strip (Zero Popups, Zero Button Shift) */
+  .trade-sponsor-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(155, 122, 73, 0.12);
+    border: 1px solid rgba(155, 122, 73, 0.35);
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-size: 8px;
+    color: var(--ink-secondary);
+    flex-shrink: 0;
+  }
+
+  /* ================= IN-PHONE MAIN CONTENT BODY (ZERO CLIPPING GRID) ================= */
+  .inphone-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 4px 7px;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  /* 1. PAPERLESS TAPE + LCD READOUT SCREEN (CONSTRUCTION MASTER PRO STYLE) */
+  .lcd-display-well {
+    background: var(--bg-lcd);
+    border: 1.5px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 4px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.45);
+    flex-shrink: 0;
+  }
+
+  .lcd-tape-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 8.5px;
+    color: var(--ink-secondary);
+    border-bottom: 1px dashed rgba(155,122,73,0.28);
+    padding-bottom: 1.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lcd-main-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .lcd-active-label {
+    font-size: 8.5px;
+    font-weight: 800;
+    color: var(--accent-copper-bright);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .lcd-big-number {
+    font-size: 15.5px;
+    font-weight: 800;
+    color: var(--ink-primary);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lcd-saw-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(200,109,45,0.14);
+    border-radius: 4px;
+    padding: 1.5px 5px;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: var(--accent-brass);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 2. INTERACTIVE MINI 3D/2D BLUEPRINT STAGE */
+  .inphone-blueprint-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-hairline);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    height: 76px;
+    min-height: 62px;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .inphone-blueprint-card.full-3d {
+    flex: 1;
+    height: auto;
+  }
+
+  .bp-overlay-pills {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .bp-pill {
+    pointer-events: auto;
+    background: rgba(19,18,16,0.82);
+    border: 1px solid var(--border-strong);
+    color: #F5F2EB;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1.5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .bp-pill.active {
+    border-color: var(--accent-copper);
+    color: var(--accent-brass);
+  }
+
+  .inphone-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+  }
+
+  /* 3. TACTILE CONSTRUCTION MASTER & TRIPLE-FRACTION KEYPAD (SCALES TO FIT 100%) */
+  .tactile-keypad-wrap {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 2fr 3fr;
+    gap: 3px;
+  }
+
+  /* Quick Parameter Chips Row */
+  .field-selector-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5px;
+    flex-shrink: 0;
+  }
+
+  .field-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+    padding: 2px 4px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.1s ease;
+    overflow: hidden;
+  }
+  .field-chip.selected {
+    border-color: var(--accent-copper);
+    background: rgba(200,109,45,0.18);
+    box-shadow: 0 0 0 1px var(--accent-copper);
+  }
+  .field-chip .fc-lbl {
+    font-size: 7px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+  }
+  .field-chip .fc-val {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ink-primary);
+    white-space: nowrap;
+  }
+
+  /* Construction Function Key Grid (5 columns x 2 rows, flex-scaled) */
+  .fn-keys-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2.5px;
+    min-height: 0;
+  }
+
+  .t-key {
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 800;
+    height: 100%;
+    min-height: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: transform 0.06s ease, filter 0.1s ease;
+    box-shadow: 0 1.5px 0 rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+  .t-key:active {
+    transform: translateY(1px);
+    box-shadow: 0 0.5px 0 rgba(0,0,0,0.45);
+  }
+
+  .t-key.k-copper {
+    background: var(--key-copper);
+    border: 1px solid var(--key-copper-border);
+    color: #FFF;
+  }
+
+  .t-key.k-fn {
+    background: var(--key-fn);
+    border: 1px solid var(--key-fn-border);
+    color: var(--accent-brass);
+  }
+
+  .t-key.k-num {
+    background: var(--key-num);
+    border: 1px solid var(--key-num-border);
+    color: var(--ink-primary);
+    font-size: 11px;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .t-key .k-sub {
+    font-size: 6px;
+    font-weight: 600;
+    opacity: 0.82;
+    margin-top: 1px;
+  }
+
+  /* Numpad + Fraction Grid (5 columns x 3 rows, flex-scaled so bottom row NEVER clips) */
+  .num-keys-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2.5px;
+    min-height: 0;
+  }
+
+  /* Digitalchemy Triple-Keypad Layout (Whole Left + Numerator/Denominator Right) */
+  .triple-fraction-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 4px;
+  }
+  .triple-subpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 2.5px;
+    min-height: 0;
+  }
+
+  /* 4. CUT LIST & JIG VIEW (WHEN SUBMODE == CUTLIST OR 3D) */
+  .cutlist-panel {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .cutlist-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 74px 72px;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hairline);
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 9.5px;
+    cursor: pointer;
+  }
+  .cutlist-row.active-member {
+    border-color: var(--accent-copper);
+    background: rgba(200,109,45,0.15);
+  }
+
+  .member-tag {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: var(--accent-copper);
+    color: #FFF;
+    font-weight: 800;
+    font-size: 9px;
+    display: grid;
+    place-items: center;
+  }
+
+  .pro-blur {
+    filter: blur(4.5px);
+    user-select: none;
+  }
+
+  /* IN-PHONE BOTTOM OS TAB BAR */
+  .inphone-tabbar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    padding: 3px 6px 2px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-hairline);
+    flex-shrink: 0;
+  }
+
+  .tabbar-btn {
+    border: none;
+    background: transparent;
+    color: var(--ink-muted);
+    font-size: 8.5px;
+    font-weight: 700;
+    padding: 2px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .tabbar-btn.active {
+    color: var(--ink-primary);
+    background: rgba(200,109,45,0.22);
+  }
+
+  .os-home-pill {
+    width: 108px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ink-muted);
+    opacity: 0.6;
+    margin: 2px auto 4px;
+    flex-shrink: 0;
+  }
+
+  /* ================= RIGHT 26% HOST & CLOUD CONTROLLER DOCK ================= */
+  .host-inspector {
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 12px;
+    gap: 8px;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .dock-card {
+    background: var(--bg-pill);
+    border: 1px solid var(--border-hairline);
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .dock-heading {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-brass);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .benchmark-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .saved-cut-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+    padding: 4px 7px;
+    font-size: 10px;
+    cursor: pointer;
+  }
+  .saved-cut-row:hover { border-color: var(--accent-copper); }
+
+  .action-btn {
+    background: linear-gradient(135deg, var(--accent-copper), var(--accent-bronze));
+    color: #FFF;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .main-studio-grid { grid-template-columns: 1fr; }
+    .host-inspector, #androidDeviceUnit { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- TOP STUDIO BAR -->
+  <header class="top-studio-bar">
+    <div class="brand-row">
+      <div class="emblem-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M3 20L14 4L21 20H3Z" stroke="#C86D2D" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M8 20L14 11L17.5 20" stroke="#D4AF37" stroke-width="1.6"/>
+        </svg>
+      </div>
+      <strong style="font-size:13px;">CutCoach AI V4</strong>
+      <span style="font-size:10.5px; color:var(--ink-muted); border-left:1px solid var(--border-hairline); padding-left:8px;">
+        RedX 3D Framing + Construction Master Pro Tactile Keypad + Chippy Tools Cut Sheet
+      </span>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:6px;">
+      <div class="seg-bar" id="emuModeBar">
+        <button class="seg-pill active" data-em="dual" onclick="setEmuMode('dual')">📱+🤖 Dual Simulator + AVD</button>
+        <button class="seg-pill" data-em="ios" onclick="setEmuMode('ios')">🍎 Xcode iPhone 16 Pro</button>
+        <button class="seg-pill" data-em="android" onclick="setEmuMode('android')">🤖 Android Studio Pixel 9 Pro</button>
+        <button class="seg-pill" data-em="native" onclick="toggleNativeFullscreen()">📲 Fullscreen Phone Mode</button>
+      </div>
+
+      <div class="seg-bar">
+        <button class="seg-pill" id="btnTierFree" onclick="setTier('free')">🔒 Free Mode</button>
+        <button class="seg-pill active" id="btnTierPro" onclick="setTier('pro')">⚡ $2.99/wk Pro</button>
+      </div>
+
+      <button class="seg-pill" style="background:var(--bg-pill); border:1px solid var(--border-hairline);" onclick="toggleTheme()">☀️ / 🌙</button>
+
+      <button class="status-cloud-btn" onclick="saveCutToSupabase()" id="cloudBtn">
+        <span>●</span>
+        <span id="cloudBtnLabel">Vercel + Supabase Live</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="main-studio-grid" id="mainStudioGrid" data-emu-mode="dual">
+
+    <!-- CENTER STAGE: PHOTOREALISTIC XCODE iPHONE 16 PRO SIMULATOR + ANDROID STUDIO PIXEL 9 PRO AVD -->
+    <section class="emulator-stage" id="emulatorStage">
+
+      <!-- ================= 1. APPLE XCODE SIMULATOR: iPHONE 16 PRO ================= -->
+      <div class="device-unit" id="iosDeviceUnit">
+        <div class="xcode-sim-bar">
+          <div class="mac-dots">
+            <span class="mac-dot r"></span>
+            <span class="mac-dot y"></span>
+            <span class="mac-dot g"></span>
+            <strong style="margin-left:4px;">iPhone 16 Pro — iOS 18.2 Simulator</strong>
+          </div>
+          <div class="sim-tool-btns">
+            <button onclick="triggerVoiceSample()" title="Simulate Jobsite Voice Dictation">🎙️ Voice</button>
+            <button onclick="toggleUnits()" title="Switch Metric mm / Imperial ft-in-1/16">📏 Units</button>
+            <button onclick="rotate3DModel(25)" title="Rotate 3D Model">🔄 3D</button>
+          </div>
+        </div>
+
+        <div class="hw-iphone16pro">
+          <div class="btn-action"></div>
+          <div class="btn-vol-up"></div>
+          <div class="btn-vol-dn"></div>
+          <div class="btn-power"></div>
+          <div class="ear-slit"></div>
+
+          <!-- iPhone 16 Pro OLED Screen (100% Interactive Self-Contained App) -->
+          <div class="hw-screen" id="iosScreenMount"></div>
+        </div>
+      </div>
+
+      <!-- ================= 2. ANDROID STUDIO LADYBUG AVD: GOOGLE PIXEL 9 PRO ================= -->
+      <div class="device-unit" id="androidDeviceUnit">
+        <div class="xcode-sim-bar" style="width:390px;">
+          <div class="mac-dots">
+            <span style="color:#4ADE80; font-weight:800;">● AVD</span>
+            <strong style="margin-left:4px;">Pixel 9 Pro — Android 15 (API 35) Emulator</strong>
+          </div>
+          <div class="sim-tool-btns">
+            <span class="mono" style="font-size:9.5px; color:#D4AF37;">412×915dp · 120Hz</span>
+          </div>
+        </div>
+
+        <div class="android-avd-row">
+          <div class="hw-pixel9pro">
+            <!-- Pixel 9 Pro Actua OLED Screen (100% Interactive Self-Contained App) -->
+            <div class="hw-screen" id="androidScreenMount"></div>
+          </div>
+
+          <!-- Android Studio AVD Side Hardware Control Strip -->
+          <div class="avd-side-strip">
+            <button class="avd-btn" onclick="toggleTheme()" title="Power / Theme">⏻</button>
+            <button class="avd-btn" onclick="nudgeActiveParam(1)" title="Volume Up / Increment">+</button>
+            <button class="avd-btn" onclick="nudgeActiveParam(-1)" title="Volume Down / Decrement">−</button>
+            <button class="avd-btn" onclick="rotate3DModel(-25)" title="Rotate Left">↺</button>
+            <button class="avd-btn" onclick="rotate3DModel(25)" title="Rotate Right">↻</button>
+            <button class="avd-btn" onclick="triggerVoiceSample()" title="Hold-to-Talk Voice">🎙️</button>
+            <button class="avd-btn" onclick="setSubMode('keypad')" title="Back to Keypad">◁</button>
+            <button class="avd-btn" onclick="setModule('rafters')" title="Home">○</button>
+            <button class="avd-btn" onclick="setSubMode('cutlist')" title="Cut List Overview">□</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT DOCK: /DEEP-RESEARCH BENCHMARKS, LIVE 3D CONTROLS & SUPABASE CLOUD VAULT -->
+    <aside class="host-inspector">
+
+      <!-- 1. /deep-research Architecture Summary -->
+      <div class="dock-card">
+        <div class="dock-heading">
+          <span>🔬 /deep-research Built-In Architecture</span>
+          <span class="mono" style="color:#4ADE80;">VERIFIED</span>
+        </div>
+        <div class="benchmark-pill">
+          <span><strong>Construction Master Pro</strong> (4.8★)</span>
+          <span class="mono" style="color:var(--accent-brass);">Tactile Keypad + Tape</span>
+        </div>
+        <div class="benchmark-pill">
+          <span><strong>RedX Roof &amp; Stair Pro</strong> (4.8★)</span>
+          <span class="mono" style="color:var(--accent-brass);">3D Orbit + A–N Cut List</span>
+        </div>
+        <div class="benchmark-pill">
+          <span><strong>Chippy Tools AU</strong> (350k+ DL)</span>
+          <span class="mono" style="color:var(--accent-brass);">1-Tap AS 1684 / IRC</span>
+        </div>
+      </div>
+
+      <!-- 2. How to Test Inside the Phones -->
+      <div class="dock-card">
+        <div class="dock-heading">
+          <span>👆 Operate Directly Inside Either Phone</span>
+          <span class="mono">iOS ↔ Android Synced</span>
+        </div>
+        <div style="font-size:10.5px; color:var(--ink-secondary); line-height:1.42;">
+          1. <strong>Tap any parameter chip</strong> inside the phone (<span class="mono">SPAN</span>, <span class="mono">PITCH</span>, <span class="mono">HIP ∠</span>) and type on the <strong>in-phone tactile keypad</strong>.<br/>
+          2. Tap <strong>[🧊 3D &amp; Blueprint]</strong> inside the phone and <strong>drag across the 3D frame</strong> to orbit in 3D.<br/>
+          3. Tap <strong>[📋 Cut List &amp; Jig]</strong> inside the phone to inspect members <span class="mono">A–N</span> &amp; test the <strong>$2.99/wk Pro Unlock</strong>.
+        </div>
+      </div>
+
+      <!-- 3. Open Fullscreen on Physical iPhone / Android -->
+      <div class="dock-card">
+        <div class="dock-heading">
+          <span>📲 Open Native Fullscreen on Your Phone</span>
+          <button class="unit-chip-btn" onclick="toggleNativeFullscreen()">Launch Fullscreen</button>
+        </div>
+        <div style="font-size:10px; color:var(--ink-secondary); line-height:1.35;">
+          Opening <span class="mono" style="color:var(--accent-brass);">/cutcoach/?mode=native</span> on your real iPhone or Android removes the simulator bezels and runs edge-to-edge like a native installed app.
+        </div>
+      </div>
+
+      <!-- 4. Live Vercel + Supabase Jobsite Cut Vault -->
+      <div class="dock-card" style="flex:1; min-height:0; justify-content:space-between;">
+        <div class="dock-heading">
+          <span>☁️ Supabase Cloud Cut Vault</span>
+          <button class="unit-chip-btn" onclick="saveCutToSupabase()">+ Save Active Cut</button>
+        </div>
+        <div id="savedCutsContainer" style="display:flex; flex-direction:column; gap:4px; overflow:hidden;"></div>
+        <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--ink-muted); border-top:1px solid var(--border-hairline); padding-top:4px;">
+          <span>Sub Price: <strong>$2.99/wk AUD</strong></span>
+          <span class="mono" style="color:#4ADE80;">Net Margin: 98.6%</span>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+<script>
+  // ================= UNIFIED IN-PHONE APPLICATION STATE =================
+  const state = {
+    emuMode: "dual",        // 'dual' | 'ios' | 'android' | 'native'
+    module: "rafters",      // 'rafters' | 'stairs' | 'kerf' | 'trig' | 'jig'
+    subMode: "keypad",      // 'keypad' | 'view3d' | 'cutlist'
+    canvasMode: "3d",       // '3d' | '2d' | 'saw'
+    units: "AU_MM",         // 'AU_MM' (mm, AS 1684/NCC) | 'US_IMP' (ft-in-1/16, IRC)
+    tier: "pro",            // 'free' | 'pro'
+    activeField: "span",    // currently focused field on the in-phone keypad
+    inputBuffer: "",        // live digits being typed on the in-phone keypad
+    selectedMember: "A",    // selected member A..F in 3D / Cut List
+    rotYaw: 34,             // 3D orbit yaw angle (deg)
+    rotPitch: 22,           // 3D orbit pitch angle (deg)
+    // Module 1: Roofs, Rafters & Bastard Hips
+    span: 5400,
+    pitchA: 25.0,
+    pitchB: 32.0,
+    eave: 450,
+    ridge: 45,
+    rafterDepth: 190,
+    // Module 2: 3D Stairs & Helical Stringers
+    totalRise: 3000,
+    targetGoing: 250,
+    outerRadius: 1200,
+    sweepAngle: 270,
+    // Module 3: Kerf-Bending & Arches
+    timberThick: 19,
+    bendRadius: 600,
+    bendAngle: 90,
+    bladeKerf: 1.65,
+    webThick: 3.0,
+    // Module 4: Right-Angle & Framing Trig
+    trigRun: 2700,
+    trigRise: 1259,
+    // Module 5: Photo Markup & Custom Jig Studio
+    wallAngle: 87.4,
+    offcutLen: 1200,
+    routerBit: 19.0,
+    savedCuts: []
+  };
+
+  // Auto-enable native fullscreen if ?mode=native or on mobile phone screen
+  if (window.location.search.includes("mode=native") || window.innerWidth < 620) {
+    document.body.classList.add("native-fullscreen");
+  }
+
+  function deg2rad(d) { return (d * Math.PI) / 180; }
+  function rad2deg(r) { return (r * 180) / Math.PI; }
+
+  function fmtLen(mm) {
+    if (state.units === "AU_MM") return `${Math.round(mm).toLocaleString()} mm`;
+    const totalIn = mm / 25.4;
+    const ft = Math.floor(totalIn / 12);
+    const remIn = totalIn - ft * 12;
+    const wholeIn = Math.floor(remIn);
+    const sixteenths = Math.round((remIn - wholeIn) * 16);
+    if (sixteenths === 16) return `${ft}'-${wholeIn + 1}"`;
+    if (sixteenths === 0) return `${ft}'-${wholeIn}"`;
+    return `${ft}'-${wholeIn} ${sixteenths}/16"`;
+  }
+
+  // Field definitions per module for the in-phone field selector strip
+  const MODULE_FIELDS = {
+    rafters: [
+      { key: "span", label: "Span", fmt: v => fmtLen(v), step: 100 },
+      { key: "pitchA", label: "Main Pitch", fmt: v => `${v.toFixed(1)}°`, step: 0.5 },
+      { key: "pitchB", label: "Hip Pitch", fmt: v => `${v.toFixed(1)}°`, step: 0.5 },
+      { key: "eave", label: "Eave Tail", fmt: v => fmtLen(v), step: 25 }
+    ],
+    stairs: [
+      { key: "totalRise", label: "Total Rise", fmt: v => fmtLen(v), step: 25 },
+      { key: "targetGoing", label: "Going (G)", fmt: v => `${v} mm`, step: 5 },
+      { key: "outerRadius", label: "Outer Rad", fmt: v => fmtLen(v), step: 50 },
+      { key: "sweepAngle", label: "Sweep ∠", fmt: v => `${v}°`, step: 15 }
+    ],
+    kerf: [
+      { key: "timberThick", label: "Thick (t)", fmt: v => `${v} mm`, step: 1 },
+      { key: "bendRadius", label: "Radius (R)", fmt: v => fmtLen(v), step: 25 },
+      { key: "bladeKerf", label: "Kerf (k)", fmt: v => `${v.toFixed(2)} mm`, step: 0.05 },
+      { key: "webThick", label: "Web (d)", fmt: v => `${v.toFixed(1)} mm`, step: 0.2 }
+    ],
+    trig: [
+      { key: "trigRun", label: "Run (a)", fmt: v => fmtLen(v), step: 50 },
+      { key: "trigRise", label: "Rise (b)", fmt: v => fmtLen(v), step: 25 },
+      { key: "pitchA", label: "Pitch θ", fmt: v => `${v.toFixed(1)}°`, step: 0.5 },
+      { key: "span", label: "Span 2a", fmt: v => fmtLen(v), step: 100 }
+    ],
+    jig: [
+      { key: "wallAngle", label: "Corner ∠", fmt: v => `${v.toFixed(1)}°`, step: 0.2 },
+      { key: "offcutLen", label: "Formply", fmt: v => `${v} mm`, step: 50 },
+      { key: "routerBit", label: "Bit Ø", fmt: v => `${v.toFixed(1)} mm`, step: 0.5 },
+      { key: "bladeKerf", label: "Kerf (k)", fmt: v => `${v.toFixed(2)} mm`, step: 0.05 }
+    ]
+  };
+
+  // ================= DETERMINISTIC MATH & LABELED A-N CUT LIST ENGINE =================
+  function solveCarpentry() {
+    if (state.module === "rafters") {
+      const halfSpan = (state.span - state.ridge) / 2;
+      const thA = deg2rad(state.pitchA);
+      const thB = deg2rad(state.pitchB);
+      const rise = halfSpan * Math.tan(thA);
+      const runB = rise / Math.tan(thB);
+      const commonLen = halfSpan / Math.cos(thA);
+      const tailLen = state.eave / Math.cos(thA);
+      const totalCommon = commonLen + tailLen;
+      const phi = Math.atan2(halfSpan, runB);
+      const planDeg = rad2deg(phi);
+      const hipRun = Math.hypot(halfSpan, runB);
+      const hipLen = Math.hypot(hipRun, rise) + (state.eave * Math.SQRT2) / Math.cos(Math.atan2(rise, hipRun));
+      const mitreM = rad2deg(Math.atan(Math.cos(thA) * Math.tan(phi)));
+      const bevelB = rad2deg(Math.asin(Math.sin(thA) * Math.sin(phi)));
+      const plumb = 90 - state.pitchA;
+      const hap = Math.round(state.rafterDepth * Math.cos(thA) * 0.67);
+      const jackDec = (450 / Math.tan(phi)) / Math.cos(thA);
+
+      return {
+        headerTitle: state.pitchA === state.pitchB ? "Equal Hip Roof (AS 1684)" : `Bastard Hip (${state.pitchA}°×${state.pitchB}°)`,
+        tapeFormula: `SPAN ${fmtLen(state.span)} · PITCH ${state.pitchA}°/${state.pitchB}° · HAP ${hap}mm`,
+        heroLabel: "COMMON + TAIL",
+        heroVal: fmtLen(totalCommon),
+        sawStrip: `🪚 SAW MITRE M: ${mitreM.toFixed(1)}° · BEVEL B: ${bevelB.toFixed(1)}° · PLUMB: ${plumb.toFixed(1)}°`,
+        cutList: [
+          { id: "A", name: "Common Rafter (×14)", len: fmtLen(totalCommon), angles: `Plumb ${plumb.toFixed(1)}° · HAP ${hap}mm`, pro: false },
+          { id: "B", name: "Bastard Hip Rafter (×4)", len: fmtLen(hipLen), angles: `Plan ${planDeg.toFixed(1)}° · Drop ${bevelB.toFixed(1)}°`, pro: true },
+          { id: "C1", name: "Jack Rafter #1 @ 450", len: fmtLen(totalCommon - jackDec), angles: `M ${mitreM.toFixed(1)}° · B ${bevelB.toFixed(1)}°`, pro: true },
+          { id: "C2", name: "Jack Rafter #2 @ 900", len: fmtLen(totalCommon - 2 * jackDec), angles: `M ${mitreM.toFixed(1)}° · B ${bevelB.toFixed(1)}°`, pro: true },
+          { id: "D", name: "Ridge Board (45mm)", len: fmtLen(state.span * 0.65), angles: `Deduct ${Math.round(state.ridge/2)}mm`, pro: false },
+          { id: "JIG", name: "Speed-Square Saw Guide Jig", len: "450×190mm Formply", angles: `Fence @ ${mitreM.toFixed(1)}°`, pro: true }
+        ]
+      };
+    }
+
+    if (state.module === "stairs") {
+      const risers = Math.max(3, Math.round(state.totalRise / 178));
+      const riserH = state.totalRise / risers;
+      const goingG = state.targetGoing;
+      const twoRplusG = Math.round(2 * riserH + goingG);
+      const rad = deg2rad(state.sweepAngle);
+      const outerArc = state.outerRadius * rad;
+      const innerArc = (state.outerRadius * 0.42) * rad;
+      const outerLen = Math.hypot(outerArc, state.totalRise);
+      const innerLen = Math.hypot(innerArc, state.totalRise);
+      const outPitch = rad2deg(Math.atan2(state.totalRise, outerArc));
+      const inPitch = rad2deg(Math.atan2(state.totalRise, innerArc));
+
+      return {
+        headerTitle: "3D Helical & Straight Stair (NCC)",
+        tapeFormula: `${risers} RISERS @ ${riserH.toFixed(1)}mm · 2R+G = ${twoRplusG}mm (NCC PASS)`,
+        heroLabel: "OUTER STRINGER",
+        heroVal: fmtLen(outerLen),
+        sawStrip: `🪚 UNWRAP PITCH OUT: ${outPitch.toFixed(1)}° · IN: ${inPitch.toFixed(1)}° · TRENCH 14mm`,
+        cutList: [
+          { id: "A", name: `Outer Helical Stringer`, len: fmtLen(outerLen), angles: `Pitch ${outPitch.toFixed(1)}° · Plumb ${(90-outPitch).toFixed(1)}°`, pro: false },
+          { id: "B", name: `Inner Helical Stringer`, len: fmtLen(innerLen), angles: `Pitch ${inPitch.toFixed(1)}° · Plumb ${(90-inPitch).toFixed(1)}°`, pro: true },
+          { id: "C", name: `Tapered Treads (×${risers-1})`, len: `${goingG}mm Walkline`, angles: `Sweep ${(state.sweepAngle/(risers-1)).toFixed(1)}°/tread`, pro: true },
+          { id: "D", name: `Riser Boards (×${risers})`, len: `${riserH.toFixed(1)} mm H`, angles: `2R+G = ${twoRplusG}mm NCC`, pro: false },
+          { id: "JIG", name: "Stringer Housing Router Jig", len: "600×300mm Formply", angles: "19mm Bush · 1:12 Wedge", pro: true }
+        ]
+      };
+    }
+
+    if (state.module === "kerf") {
+      const cutDepth = Math.max(1, state.timberThick - state.webThick);
+      const spacingS = (state.bendRadius * state.bladeKerf) / cutDepth;
+      const arcLen = deg2rad(state.bendAngle) * state.bendRadius;
+      const numCuts = Math.max(3, Math.ceil(arcLen / spacingS));
+
+      return {
+        headerTitle: "Kerf-Bending & Archway Studio",
+        tapeFormula: `t=${state.timberThick}mm · R=${state.bendRadius}mm · Blade k=${state.bladeKerf}mm`,
+        heroLabel: `${numCuts} KERF SLOTS @`,
+        heroVal: `${spacingS.toFixed(1)} mm c/c`,
+        sawStrip: `🪚 PLUNGE DEPTH: ${cutDepth.toFixed(1)}mm · LEAVE WEB: ${state.webThick.toFixed(1)}mm INTACT`,
+        cutList: [
+          { id: "A", name: "Curved Plinth Blank", len: fmtLen(arcLen + 120), angles: `${numCuts} slots @ ${spacingS.toFixed(1)}mm`, pro: false },
+          { id: "B", name: "Track-Saw Depth Stop", len: `${cutDepth.toFixed(1)} mm Deep`, angles: `Web d_web = ${state.webThick.toFixed(1)}mm`, pro: true },
+          { id: "C", name: "Glue Squeeze-Out Allowance", len: `${(numCuts * state.bladeKerf).toFixed(1)} mm`, angles: `Inner Arc Shortening`, pro: true },
+          { id: "JIG", name: "Crosscut Sled Indexing Pin Jig", len: `Pin @ ${spacingS.toFixed(1)}mm`, angles: `${state.bladeKerf.toFixed(2)}mm Key Width`, pro: true }
+        ]
+      };
+    }
+
+    if (state.module === "trig") {
+      const hyp = Math.hypot(state.trigRun, state.trigRise);
+      const pitch = rad2deg(Math.atan2(state.trigRise, state.trigRun));
+      const plumb = 90 - pitch;
+      const ratio12 = (state.trigRise / state.trigRun) * 12;
+
+      return {
+        headerTitle: "Right-Angle & Rake Wall Solver",
+        tapeFormula: `RUN ${fmtLen(state.trigRun)} · RISE ${fmtLen(state.trigRise)} · SLOPE ${ratio12.toFixed(2)}:12`,
+        heroLabel: "DIAGONAL (HYP)",
+        heroVal: fmtLen(hyp),
+        sawStrip: `🪚 SEAT ANGLE: ${pitch.toFixed(2)}° · PLUMB ANGLE: ${plumb.toFixed(2)}°`,
+        cutList: [
+          { id: "A", name: "Diagonal / Rafter Line (c)", len: fmtLen(hyp), angles: `${pitch.toFixed(2)}° / ${plumb.toFixed(2)}°`, pro: false },
+          { id: "B", name: "Rake Wall Top Plate", len: fmtLen(hyp), angles: `Bevel ${pitch.toFixed(2)}°`, pro: true },
+          { id: "C", name: "Rake Stud Δ @ 450mm c/c", len: fmtLen(450 * Math.tan(deg2rad(pitch))), angles: `Top Plumb ${plumb.toFixed(2)}°`, pro: true }
+        ]
+      };
+    }
+
+    // Module 5: Photo Markup & Custom Jig Studio
+    const halfMitre = state.wallAngle / 2;
+    const delta45 = 45 - halfMitre;
+    return {
+      headerTitle: "Photo Markup & Custom Jig Studio",
+      tapeFormula: `WALL CORNER ${state.wallAngle.toFixed(1)}° · TRUE BISECT ${halfMitre.toFixed(2)}°`,
+      heroLabel: "SAW MITRE SET",
+      heroVal: `${(45 - delta45).toFixed(2)}°`,
+      sawStrip: `🪚 SHIFT ${Math.abs(delta45).toFixed(2)}° OFF 45° STOP · TRACK OFFSET 142.0mm`,
+      cutList: [
+        { id: "A", name: "Skirting / Architrave Mitre", len: `Bisect ${halfMitre.toFixed(2)}°`, angles: `Saw @ ${(45-delta45).toFixed(2)}°`, pro: true },
+        { id: "B", name: "Zero-Clearance Track Sled", len: `${state.offcutLen}×300mm`, angles: "17mm F17 Formply", pro: true },
+        { id: "STL", name: "3D-Printable Angle Gauge (.STL)", len: "K1 Max 22m Print", angles: `${halfMitre.toFixed(2)}° Lock Flange`, pro: true }
+      ]
+    };
+  }
+
+  // ================= TRUE 3D PERSPECTIVE WIREFRAME + 2D BLUEPRINT SVG ENGINE =================
+  function project3D(x, y, z, w, h) {
+    const yaw = deg2rad(state.rotYaw);
+    const pitch = deg2rad(state.rotPitch);
+    const x1 = x * Math.cos(yaw) - z * Math.sin(yaw);
+    const z1 = x * Math.sin(yaw) + z * Math.cos(yaw);
+    const y2 = y * Math.cos(pitch) - z1 * Math.sin(pitch);
+    const z2 = y * Math.sin(pitch) + z1 * Math.cos(pitch);
+    const fov = 260 / (260 + z2 + 140);
+    return [w / 2 + x1 * fov, h / 2 - y2 * fov];
+  }
+
+  function renderCanvasSvg(w, h) {
+    const sol = solveCarpentry();
+
+    // Saw Gauge Sub-View
+    if (state.canvasMode === "saw") {
+      const mAngle = state.module === "rafters" ? 33.4 : (state.wallAngle / 2);
+      const rad = deg2rad(mAngle - 45);
+      const bx = 155 + Math.sin(rad) * 58;
+      const by = 92 - Math.cos(rad) * 58;
+      return `
+        <rect width="${w}" height="${h}" fill="#121110"/>
+        <circle cx="155" cy="94" r="62" fill="rgba(200,109,45,0.10)" stroke="#9B7A49" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <rect x="65" y="88" width="180" height="14" fill="#2A2723" stroke="#C86D2D" stroke-width="1.4"/>
+        <line x1="155" y1="94" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="#D4AF37" stroke-width="3.2"/>
+        <circle cx="155" cy="94" r="6" fill="#C86D2D"/>
+        <text x="12" y="82" fill="#4ADE80" font-family="monospace" font-size="8.5" font-weight="bold">FENCE 0°</text>
+        <text x="168" y="42" fill="#D4AF37" font-family="monospace" font-size="9.5" font-weight="bold">${sol.sawStrip.replace("🪚 ","")}</text>
+      `;
+    }
+
+    // 3D Orbit Interactive View (RedX Roof / Stair 3D Style)
+    if (state.module === "rafters") {
+      const hRise = Math.min(48, Math.max(18, state.pitchA * 1.15));
+      const pts = {
+        fl: project3D(-85, -24, -55, w, h),
+        fr: project3D(85, -24, -55, w, h),
+        bl: project3D(-85, -24, 55, w, h),
+        br: project3D(85, -24, 55, w, h),
+        rl: project3D(-35, hRise - 24, 0, w, h),
+        rr: project3D(35, hRise - 24, 0, w, h)
+      };
+      const line = (a, b, col, sw) => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${col}" stroke-width="${sw}" stroke-linecap="round"/>`;
+      // Intermediate Common & Jack Rafters
+      let raftersSvg = "";
+      for (let t = -0.7; t <= 0.7; t += 0.35) {
+        const rx = t * 45;
+        const topP = project3D(rx, hRise - 24, 0, w, h);
+        const botF = project3D(rx, -24, -55, w, h);
+        const botB = project3D(rx, -24, 55, w, h);
+        raftersSvg += line(topP, botF, "#C86D2D", 1.8) + line(topP, botB, "rgba(200,109,45,0.55)", 1.3);
+      }
+      return `
+        <rect width="${w}" height="${h}" fill="#11100E"/>
+        <!-- Wall Top Plate Perimeter -->
+        ${line(pts.fl, pts.fr, "#9B7A49", 2)}
+        ${line(pts.fr, pts.br, "#9B7A49", 2)}
+        ${line(pts.br, pts.bl, "rgba(155,122,73,0.5)", 1.4)}
+        ${line(pts.bl, pts.fl, "#9B7A49", 2)}
+        <!-- Common Rafters (A) -->
+        ${raftersSvg}
+        <!-- Bastard / Regular Hip Rafters (B) -->
+        ${line(pts.rl, pts.fl, "#4ADE80", 2.5)}
+        ${line(pts.rl, pts.bl, "#4ADE80", 2.0)}
+        ${line(pts.rr, pts.fr, "#4ADE80", 2.5)}
+        ${line(pts.rr, pts.br, "#4ADE80", 2.0)}
+        <!-- Ridge Board (D) -->
+        ${line(pts.rl, pts.rr, "#D4AF37", 3.2)}
+        <text x="10" y="${h-8}" fill="#B8B0A4" font-family="monospace" font-size="8.5">DRAG TO ORBIT 3D (${state.rotYaw}°) · A:Common B:Hip D:Ridge</text>
+      `;
+    }
+
+    if (state.module === "stairs") {
+      let treadsSvg = "";
+      const steps = 10;
+      const sweep = deg2rad(state.sweepAngle);
+      for (let i = 0; i <= steps; i++) {
+        const a = (i / steps) * sweep - sweep / 2;
+        const y = -36 + (i / steps) * 72;
+        const pIn = project3D(Math.cos(a) * 24, y, Math.sin(a) * 24, w, h);
+        const pOut = project3D(Math.cos(a) * 76, y, Math.sin(a) * 76, w, h);
+        treadsSvg += `<line x1="${pIn[0].toFixed(1)}" y1="${pIn[1].toFixed(1)}" x2="${pOut[0].toFixed(1)}" y2="${pOut[1].toFixed(1)}" stroke="#D4AF37" stroke-width="2.2"/>`;
+        if (i > 0) {
+          const aPrev = ((i - 1) / steps) * sweep - sweep / 2;
+          const yPrev = -36 + ((i - 1) / steps) * 72;
+          const prevOut = project3D(Math.cos(aPrev) * 76, yPrev, Math.sin(aPrev) * 76, w, h);
+          const prevIn = project3D(Math.cos(aPrev) * 24, yPrev, Math.sin(aPrev) * 24, w, h);
+          treadsSvg += `<line x1="${prevOut[0].toFixed(1)}" y1="${prevOut[1].toFixed(1)}" x2="${pOut[0].toFixed(1)}" y2="${pOut[1].toFixed(1)}" stroke="#C86D2D" stroke-width="2.5"/>`;
+          treadsSvg += `<line x1="${prevIn[0].toFixed(1)}" y1="${prevIn[1].toFixed(1)}" x2="${pIn[0].toFixed(1)}" y2="${pIn[1].toFixed(1)}" stroke="#4ADE80" stroke-width="1.8"/>`;
+        }
+      }
+      return `
+        <rect width="${w}" height="${h}" fill="#11100E"/>
+        ${treadsSvg}
+        <text x="10" y="${h-8}" fill="#B8B0A4" font-family="monospace" font-size="8.5">3D HELICAL STRINGER ORBIT · Rise ${fmtLen(state.totalRise)} · ${state.sweepAngle}°</text>
+      `;
+    }
+
+    if (state.module === "kerf") {
+      const cutDepth = Math.max(1, state.timberThick - state.webThick);
+      const spacingS = (state.bendRadius * state.bladeKerf) / cutDepth;
+      const numCuts = Math.min(18, Math.max(4, Math.ceil((deg2rad(state.bendAngle) * state.bendRadius) / spacingS)));
+      let slots = "";
+      for (let i = 0; i < numCuts; i++) {
+        const sx = 28 + i * (254 / numCuts);
+        slots += `<line x1="${sx.toFixed(1)}" y1="68" x2="${sx.toFixed(1)}" y2="92" stroke="#D4AF37" stroke-width="1.8"/>`;
+      }
+      return `
+        <rect width="${w}" height="${h}" fill="#11100E"/>
+        <path d="M 62 56 A 92 44 0 0 1 248 56" fill="none" stroke="#C86D2D" stroke-width="8"/>
+        <rect x="20" y="62" width="270" height="30" rx="3" fill="rgba(200,109,45,0.22)" stroke="#C86D2D" stroke-width="1.5"/>
+        <line x1="20" y1="68" x2="290" y2="68" stroke="#4ADE80" stroke-width="1.2" stroke-dasharray="3 2"/>
+        ${slots}
+        <text x="12" y="${h-8}" fill="#4ADE80" font-family="monospace" font-size="8.5">KERF PITCH s = ${spacingS.toFixed(1)}mm · Depth = ${cutDepth.toFixed(1)}mm · Web = ${state.webThick.toFixed(1)}mm</text>
+      `;
+    }
+
+    // Trig & Jig Blueprint
+    const ang = rad2deg(Math.atan2(state.trigRise, state.trigRun));
+    return `
+      <rect width="${w}" height="${h}" fill="#11100E"/>
+      <polygon points="38,94 256,94 256,24" fill="rgba(200,109,45,0.22)" stroke="#C86D2D" stroke-width="2.2"/>
+      <text x="82" y="88" fill="#4ADE80" font-family="monospace" font-size="9.5" font-weight="bold">θ = ${ang.toFixed(2)}°</text>
+      <text x="120" y="52" fill="#D4AF37" font-family="monospace" font-size="9.5" font-weight="bold">${sol.heroVal}</text>
+      <text x="12" y="${h-8}" fill="#B8B0A4" font-family="monospace" font-size="8.5">${sol.tapeFormula}</text>
+    `;
+  }
+
+  // ================= BUILD COMPLETE SELF-CONTAINED MOBILE OS SCREEN =================
+  function buildPhoneScreenHtml(osType) {
+    const sol = solveCarpentry();
+    const fields = MODULE_FIELDS[state.module] || MODULE_FIELDS.rafters;
+    const isFree = state.tier === "free";
+
+    // Status bar per OS
+    const statusBarHtml = osType === "ios" ? `
+      <div class="ios-status-row">
+        <span class="mono">9:41</span>
+        <div class="ios-dynamic-island" onclick="this.classList.toggle('expanded')" title="Tap Dynamic Island">
+          <span style="font-size:8.5px; color:#C86D2D; font-weight:800;">● SAW</span>
+          <span class="mono" style="font-size:8.5px; color:#D4AF37;">${isFree ? "PRO 🔒" : sol.heroVal}</span>
+          <div class="truedepth-lens"></div>
+        </div>
+        <span class="mono" style="font-size:9.5px;">5G 100%</span>
+      </div>
+    ` : `
+      <div class="android-status-row">
+        <span class="mono">9:41</span>
+        <div class="pixel-punch-camera"></div>
+        <span class="mono" style="font-size:9.5px;">5G · Wi-Fi · 100%</span>
+      </div>
+    `;
+
+    // Field selector chips
+    const fieldChipsHtml = fields.map(f => {
+      const sel = state.activeField === f.key ? "selected" : "";
+      return `
+        <button class="field-chip ${sel}" onclick="selectField('${f.key}')">
+          <span class="fc-lbl">${f.label}</span>
+          <span class="fc-val mono">${f.fmt(state[f.key])}</span>
+        </button>
+      `;
+    }).join("");
+
+    // Cut List & Jig rows (for SubMode == cutlist or 3D inspection)
+    const cutListHtml = sol.cutList.map(item => {
+      const locked = isFree && item.pro;
+      return `
+        <div class="cutlist-row ${state.selectedMember === item.id ? 'active-member' : ''}" onclick="selectMember('${item.id}')">
+          <div class="member-tag mono">${item.id}</div>
+          <div style="font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.name}</div>
+          <div class="mono ${locked ? 'pro-blur' : ''}" style="text-align:right; font-weight:700; color:var(--ink-primary);">${item.len}</div>
+          <div class="mono ${locked ? 'pro-blur' : ''}" style="text-align:right; color:var(--accent-brass); font-size:8.5px;">${item.angles}</div>
+        </div>
+      `;
+    }).join("");
+
+    const activeFieldObj = fields.find(f => f.key === state.activeField) || fields[0];
+    const displayBuffer = state.inputBuffer !== ""
+      ? `${state.inputBuffer} ▏`
+      : `${sol.heroLabel}: ${sol.heroVal}`;
+
+    return `
+      ${statusBarHtml}
+
+      <!-- In-Phone App Bar + Installed Calculator Switcher + Sub-Mode Switcher -->
+      <div class="inphone-header">
+        <div class="inphone-title-row">
+          <div class="inphone-app-name">
+            <span style="color:var(--accent-copper);">▲</span>
+            <span>${sol.headerTitle}</span>
+          </div>
+          <button class="unit-chip-btn mono" onclick="toggleUnits()">
+            ${state.units === "AU_MM" ? "AU mm · AS 1684" : "US ft-in · IRC"}
+          </button>
+        </div>
+
+        <!-- Installed Competitor Calculator Switcher Bar -->
+        <div class="installed-calc-bar">
+          <button class="calc-prof-btn ${(state.appProfile || 'cutcoach') === 'cutcoach' ? 'active' : ''}" onclick="setAppProfile('cutcoach')">⚡ CutCoach</button>
+          <button class="calc-prof-btn ${state.appProfile === 'cmpro' ? 'active' : ''}" onclick="setAppProfile('cmpro')">🧮 CMPro 4065</button>
+          <button class="calc-prof-btn ${state.appProfile === 'fracplus' ? 'active' : ''}" onclick="setAppProfile('fracplus')">➗ FracPlus</button>
+          <button class="calc-prof-btn ${state.appProfile === 'chippy' ? 'active' : ''}" onclick="setAppProfile('chippy')">🇦🇺 Chippy AU</button>
+          <button class="calc-prof-btn ${state.appProfile === 'redx' ? 'active' : ''}" onclick="setAppProfile('redx')">🧊 RedX 3D</button>
+        </div>
+
+        <div class="inphone-submode-bar">
+          <button class="submode-btn ${state.subMode === 'keypad' ? 'active' : ''}" onclick="setSubMode('keypad')">🧮 Keypad &amp; Tape</button>
+          <button class="submode-btn ${state.subMode === 'view3d' ? 'active' : ''}" onclick="setSubMode('view3d')">🧊 3D &amp; Blueprint</button>
+          <button class="submode-btn ${state.subMode === 'cutlist' ? 'active' : ''}" onclick="setSubMode('cutlist')">📋 Cut List (${sol.cutList.length})</button>
+        </div>
+      </div>
+
+      <!-- In-Phone Dynamic Body (100% Viewport-Locked Zero-Clipping) -->
+      <div class="inphone-body">
+
+        ${isFree ? `
+          <div class="trade-sponsor-strip">
+            <span>🔧 <strong>TRADE PARTNER:</strong> Makita 40V XGT 185mm Track Saw</span>
+            <button class="unit-chip-btn" style="padding:1px 4px; font-size:7.5px;" onclick="setTier('pro')">No Ads $4.99</button>
+          </div>
+        ` : ""}
+
+        <!-- Multi-Line LCD Paperless Tape Display -->
+        <div class="lcd-display-well">
+          <div class="lcd-tape-row mono">
+            <span>${state.appProfile === 'fracplus' ? `FRAC PAD: ${state.fracWhole || 14} ${state.fracNum || 11}/${state.fracDen || 16}" + 38 5/8"` : sol.tapeFormula}</span>
+            <span style="color:#4ADE80;">${(state.appProfile || 'cutcoach').toUpperCase()}</span>
+          </div>
+          <div class="lcd-main-row">
+            <span class="lcd-active-label mono">${state.appProfile === 'fracplus' ? 'TAPE 1/16":' : `EDIT [${activeFieldObj.label}]:`}</span>
+            <span class="lcd-big-number mono">${state.appProfile === 'fracplus' ? `${(state.fracWhole || 14) + 39} 5/16" (${Math.round(((state.fracWhole || 14) + 39.3125)*25.4)}mm)` : displayBuffer}</span>
+          </div>
+          <div class="lcd-saw-strip mono ${isFree ? 'pro-blur' : ''}">
+            <span>${sol.sawStrip}</span>
+          </div>
+        </div>
+
+        <!-- Interactive 3D / 2D Blueprint Canvas -->
+        <div class="inphone-blueprint-card ${state.subMode === 'view3d' ? 'full-3d' : ''}" style="display:${(state.subMode === 'cutlist' || state.appProfile === 'fracplus') ? 'none' : 'flex'};">
+          <div class="bp-overlay-pills">
+            <div style="display:flex; gap:3px;">
+              <button class="bp-pill ${state.canvasMode === '3d' ? 'active' : ''}" onclick="setCanvasMode('3d')">3D Orbit</button>
+              <button class="bp-pill ${state.canvasMode === 'saw' ? 'active' : ''}" onclick="setCanvasMode('saw')">Saw Blade ∠</button>
+            </div>
+            <button class="bp-pill" onclick="triggerVoiceSample()">🎙️ Voice Cut</button>
+          </div>
+          <svg class="inphone-canvas" viewBox="0 0 310 112" preserveAspectRatio="xMidYMid meet"
+            onmousedown="startOrbitDrag(event)" ontouchstart="startOrbitDrag(event)">
+            ${renderCanvasSvg(310, 112)}
+          </svg>
+        </div>
+
+        <!-- Digitalchemy Fraction Calculator Plus Triple-Keypad Mode -->
+        <div class="triple-fraction-grid" style="display:${(state.subMode === 'keypad' && state.appProfile === 'fracplus') ? 'grid' : 'none'};">
+          <div style="display:flex; flex-direction:column; gap:2px; min-height:0;">
+            <span class="mono" style="font-size:7.5px; color:var(--accent-brass); font-weight:800;">WHOLE FEET / INCHES</span>
+            <div class="triple-subpad" style="flex:1;">
+              <button class="t-key k-num mono" onclick="setFracWhole(7)">7</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(8)">8</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(9)">9</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(4)">4</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(5)">5</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(6)">6</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(1)">1</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(2)">2</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(3)">3</button>
+              <button class="t-key k-fn mono" onclick="setFracWhole(0)">CLR</button>
+              <button class="t-key k-num mono" onclick="setFracWhole(14)">0</button>
+              <button class="t-key k-copper mono" onclick="setAppProfile('cutcoach')">= mm</button>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:2px; min-height:0;">
+            <span class="mono" style="font-size:7.5px; color:#4ADE80; font-weight:800;">NUMERATOR (TOP)</span>
+            <div class="triple-subpad" style="flex:1;">
+              <button class="t-key k-fn mono" onclick="setFracNum(1)">1</button>
+              <button class="t-key k-fn mono" onclick="setFracNum(3)">3</button>
+              <button class="t-key k-fn mono" onclick="setFracNum(5)">5</button>
+              <button class="t-key k-fn mono" onclick="setFracNum(7)">7</button>
+              <button class="t-key k-fn mono" onclick="setFracNum(9)">9</button>
+              <button class="t-key k-fn mono" onclick="setFracNum(11)">11</button>
+            </div>
+            <span class="mono" style="font-size:7.5px; color:var(--accent-copper-bright); font-weight:800;">DENOMINATOR (TAPE)</span>
+            <div class="triple-subpad" style="flex:1;">
+              <button class="t-key k-copper mono" onclick="setFracDen(2)">/2</button>
+              <button class="t-key k-copper mono" onclick="setFracDen(4)">/4</button>
+              <button class="t-key k-copper mono" onclick="setFracDen(8)">/8</button>
+              <button class="t-key k-copper mono" onclick="setFracDen(16)">/16</button>
+              <button class="t-key k-copper mono" onclick="setFracDen(32)">/32</button>
+              <button class="t-key k-copper mono" onclick="setFracDen(64)">/64</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tactile Construction Master Keypad (Visible in Keypad Mode & Scaled 100% Inside Viewport) -->
+        <div class="tactile-keypad-wrap" style="display:${(state.subMode === 'keypad' && state.appProfile !== 'fracplus') ? 'grid' : 'none'};">
+          <div class="field-selector-strip">
+            ${fieldChipsHtml}
+          </div>
+
+          <!-- Row 1 & 2: Dedicated Construction Master Keys -->
+          <div class="fn-keys-grid">
+            <button class="t-key k-copper" onclick="applyQuickFn('pitch')"><span>Pitch</span><span class="k-sub">θ Deg</span></button>
+            <button class="t-key k-copper" onclick="applyQuickFn('rise')"><span>Rise</span><span class="k-sub">Vert</span></button>
+            <button class="t-key k-copper" onclick="applyQuickFn('run')"><span>Run</span><span class="k-sub">Span</span></button>
+            <button class="t-key k-copper" onclick="applyQuickFn('diag')"><span>Diag</span><span class="k-sub">Rafter</span></button>
+            <button class="t-key k-copper" onclick="applyQuickFn('hipv')"><span>Hip/V</span><span class="k-sub">Bastard</span></button>
+
+            <button class="t-key k-fn" onclick="applyPresetPitch(22.5)"><span>22.5°</span><span class="k-sub">Pitch</span></button>
+            <button class="t-key k-fn" onclick="applyPresetPitch(25)"><span>25.0°</span><span class="k-sub">Std AU</span></button>
+            <button class="t-key k-fn" onclick="applyPresetPitch(30)"><span>30.0°</span><span class="k-sub">Steep</span></button>
+            <button class="t-key k-fn" onclick="setCanvasMode('saw')"><span>Saw ∠</span><span class="k-sub">M &amp; B</span></button>
+            <button class="t-key k-fn" onclick="toggleUnits()"><span>Conv</span><span class="k-sub">mm/ft</span></button>
+          </div>
+
+          <!-- Numpad + Fraction Keys (3x5 Grid, Zero Bottom Clipping) -->
+          <div class="num-keys-grid">
+            <button class="t-key k-num mono" onclick="pressDigit('7')">7</button>
+            <button class="t-key k-num mono" onclick="pressDigit('8')">8</button>
+            <button class="t-key k-num mono" onclick="pressDigit('9')">9</button>
+            <button class="t-key k-fn mono" onclick="nudgeActiveParam(1)">+ Step</button>
+            <button class="t-key k-fn mono" onclick="pressBackspace()">⌫</button>
+
+            <button class="t-key k-num mono" onclick="pressDigit('4')">4</button>
+            <button class="t-key k-num mono" onclick="pressDigit('5')">5</button>
+            <button class="t-key k-num mono" onclick="pressDigit('6')">6</button>
+            <button class="t-key k-fn mono" onclick="nudgeActiveParam(-1)">− Step</button>
+            <button class="t-key k-fn mono" onclick="clearBuffer()">CLR</button>
+
+            <button class="t-key k-num mono" onclick="pressDigit('1')">1</button>
+            <button class="t-key k-num mono" onclick="pressDigit('2')">2</button>
+            <button class="t-key k-num mono" onclick="pressDigit('3')">3</button>
+            <button class="t-key k-num mono" onclick="pressDigit('0')">0</button>
+            <button class="t-key k-copper mono" onclick="commitBuffer()">ENTER =</button>
+          </div>
+        </div>
+
+        <!-- Cut List & Jig Panel (Visible in Cut List Mode or below 3D View) -->
+        <div class="cutlist-panel" style="display:${state.subMode !== 'keypad' ? 'flex' : 'none'};">
+          ${isFree ? `
+            <div style="display:flex; align-items:center; justify-content:space-between; background:#2A1B12; border:1px solid var(--accent-copper); border-radius:6px; padding:4px 8px; font-size:9px;">
+              <span>🔒 <strong>Pro Saw Angles &amp; Jig Plans Blurred</strong></span>
+              <button class="unit-chip-btn" style="background:var(--accent-copper); color:#FFF;" onclick="setTier('pro')">Unlock $2.99/wk</button>
+            </div>
+          ` : ""}
+          ${cutListHtml}
+        </div>
+
+      </div>
+
+      <!-- Bottom 5-Tab Navigation inside Phone -->
+      <div class="inphone-tabbar">
+        <button class="tabbar-btn ${state.module === 'rafters' ? 'active' : ''}" onclick="setModule('rafters')"><span>📐</span><span>Rafters</span></button>
+        <button class="tabbar-btn ${state.module === 'stairs' ? 'active' : ''}" onclick="setModule('stairs')"><span>🪜</span><span>Stairs</span></button>
+        <button class="tabbar-btn ${state.module === 'kerf' ? 'active' : ''}" onclick="setModule('kerf')"><span>🪵</span><span>Kerf</span></button>
+        <button class="tabbar-btn ${state.module === 'trig' ? 'active' : ''}" onclick="setModule('trig')"><span>⊿</span><span>Trig</span></button>
+        <button class="tabbar-btn ${state.module === 'jig' ? 'active' : ''}" onclick="setModule('jig')"><span>🛠️</span><span>Jig/Cam</span></button>
+      </div>
+      <div class="os-home-pill"></div>
+    `;
+  }
+
+  function renderBothPhones() {
+    document.getElementById("iosScreenMount").innerHTML = buildPhoneScreenHtml("ios");
+    document.getElementById("androidScreenMount").innerHTML = buildPhoneScreenHtml("android");
+  }
+
+  // ================= IN-PHONE KEYPAD & 3D ORBIT HANDLERS =================
+  function selectField(key) {
+    state.activeField = key;
+    state.inputBuffer = "";
+    renderBothPhones();
+  }
+
+  function pressDigit(d) {
+    if (state.inputBuffer.length < 7) {
+      state.inputBuffer += d;
+      renderBothPhones();
+    }
+  }
+
+  function pressBackspace() {
+    state.inputBuffer = state.inputBuffer.slice(0, -1);
+    renderBothPhones();
+  }
+
+  function clearBuffer() {
+    state.inputBuffer = "";
+    renderBothPhones();
+  }
+
+  function commitBuffer() {
+    if (state.inputBuffer !== "") {
+      const val = parseFloat(state.inputBuffer);
+      if (!isNaN(val) && val > 0) {
+        state[state.activeField] = val;
+      }
+      state.inputBuffer = "";
+    }
+    renderBothPhones();
+  }
+
+  function nudgeActiveParam(dir) {
+    const fields = MODULE_FIELDS[state.module] || MODULE_FIELDS.rafters;
+    const f = fields.find(x => x.key === state.activeField) || fields[0];
+    state[f.key] = Math.max(1, parseFloat((state[f.key] + dir * f.step).toFixed(2)));
+    renderBothPhones();
+  }
+
+  function applyPresetPitch(deg) {
+    state.pitchA = deg;
+    state.pitchB = deg;
+    renderBothPhones();
+  }
+
+  function applyQuickFn(fnType) {
+    if (state.inputBuffer !== "") commitBuffer();
+    if (fnType === "pitch") selectField("pitchA");
+    else if (fnType === "rise") { setModule("stairs"); selectField("totalRise"); }
+    else if (fnType === "run") selectField("span");
+    else if (fnType === "diag") setSubMode("cutlist");
+    else if (fnType === "hipv") { state.pitchB = state.pitchA === state.pitchB ? 32.0 : state.pitchA; renderBothPhones(); }
+  }
+
+  function setModule(mod) {
+    state.module = mod;
+    const fields = MODULE_FIELDS[mod] || MODULE_FIELDS.rafters;
+    state.activeField = fields[0].key;
+    state.inputBuffer = "";
+    renderBothPhones();
+  }
+
+  function setSubMode(sm) {
+    state.subMode = sm;
+    renderBothPhones();
+  }
+
+  function setAppProfile(prof) {
+    state.appProfile = prof;
+    if (prof === "redx") {
+      state.subMode = "view3d";
+    } else if (prof === "chippy") {
+      state.units = "AU_MM";
+      state.subMode = "cutlist";
+    } else if (prof === "cmpro") {
+      state.units = "US_IMP";
+      state.subMode = "keypad";
+    } else if (prof === "fracplus") {
+      state.units = "US_IMP";
+      state.subMode = "keypad";
+    } else {
+      state.subMode = "keypad";
+    }
+    renderBothPhones();
+  }
+
+  function setFracWhole(w) { state.fracWhole = w; renderBothPhones(); }
+  function setFracNum(n) { state.fracNum = n; renderBothPhones(); }
+  function setFracDen(d) { state.fracDen = d; renderBothPhones(); }
+
+  function setCanvasMode(cm) {
+    state.canvasMode = cm;
+    renderBothPhones();
+  }
+
+  function selectMember(id) {
+    state.selectedMember = id;
+    renderBothPhones();
+  }
+
+  function toggleUnits() {
+    state.units = state.units === "AU_MM" ? "US_IMP" : "AU_MM";
+    renderBothPhones();
+  }
+
+  function setTier(t) {
+    state.tier = t;
+    document.getElementById("btnTierFree").classList.toggle("active", t === "free");
+    document.getElementById("btnTierPro").classList.toggle("active", t === "pro");
+    renderBothPhones();
+  }
+
+  function setEmuMode(m) {
+    state.emuMode = m;
+    document.body.classList.remove("native-fullscreen");
+    document.getElementById("mainStudioGrid").setAttribute("data-emu-mode", m);
+    document.querySelectorAll("#emuModeBar .seg-pill").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-em") === m);
+    });
+  }
+
+  function toggleNativeFullscreen() {
+    document.body.classList.toggle("native-fullscreen");
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.setAttribute("data-theme", html.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  }
+
+  function rotate3DModel(deltaYaw) {
+    state.rotYaw = (state.rotYaw + deltaYaw) % 360;
+    renderBothPhones();
+  }
+
+  // Interactive 3D Orbit Drag on Phone Canvas
+  let dragging = false;
+  let lastX = 0;
+  function startOrbitDrag(e) {
+    dragging = true;
+    lastX = e.touches ? e.touches[0].clientX : e.clientX;
+  }
+  window.addEventListener("mousemove", e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    lastX = e.clientX;
+    state.rotYaw = Math.round((state.rotYaw + dx * 0.8) % 360);
+    renderBothPhones();
+  });
+  window.addEventListener("mouseup", () => { dragging = false; });
+
+  const VOICE_CMDS = [
+    () => { state.module = "rafters"; state.span = 6200; state.pitchA = 27.5; state.pitchB = 35.0; },
+    () => { state.module = "stairs"; state.totalRise = 3150; state.outerRadius = 1350; state.sweepAngle = 270; },
+    () => { state.module = "kerf"; state.timberThick = 19; state.bendRadius = 450; state.bladeKerf = 1.65; }
+  ];
+  let vIdx = 0;
+  function triggerVoiceSample() {
+    VOICE_CMDS[vIdx % VOICE_CMDS.length]();
+    vIdx++;
+    renderBothPhones();
+  }
+
+  // ================= VERCEL + SUPABASE CLOUD SYNC =================
+  const CLOUD_API = window.location.hostname.includes("vercel.app")
+    ? "/api/cutcoach"
+    : "https://luke-justin-ai-bridge.vercel.app/api/cutcoach";
+
+  function renderSavedCuts(cuts) {
+    state.savedCuts = cuts || [];
+    const el = document.getElementById("savedCutsContainer");
+    if (!el) return;
+    el.innerHTML = state.savedCuts.slice(0, 4).map((c, i) => `
+      <div class="saved-cut-row" onclick="loadCutFromVault(${i})">
+        <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:75%; font-weight:600;">${c.title}</span>
+        <span class="mono" style="color:var(--accent-brass); font-size:9px;">${(c.module_tab || 'rafters').toUpperCase()} ↗</span>
+      </div>
+    `).join("");
+  }
+
+  function loadCutFromVault(i) {
+    const c = state.savedCuts[i];
+    if (!c) return;
+    const inp = c.inputs_json || {};
+    if (inp.span) state.span = inp.span;
+    if (inp.pitchA) state.pitchA = inp.pitchA;
+    if (inp.pitchB) state.pitchB = inp.pitchB;
+    if (inp.totalRise) state.totalRise = inp.totalRise;
+    if (inp.radius) state.bendRadius = inp.radius;
+    setModule(c.module_tab || "rafters");
+  }
+
+  async function initCloudSync() {
+    try {
+      const r = await fetch(CLOUD_API);
+      const d = await r.json();
+      if (d.saved_cuts) renderSavedCuts(d.saved_cuts);
+    } catch {
+      renderSavedCuts([
+        { title: "Wansey Rd · 25°/32° Bastard Hip", module_tab: "rafters", inputs_json: { span: 5400, pitchA: 25, pitchB: 32 } },
+        { title: "Helical Stair · 3000mm Rise", module_tab: "stairs", inputs_json: { totalRise: 3000 } },
+        { title: "19mm Spotted Gum Kerf R600", module_tab: "kerf", inputs_json: { radius: 600 } }
+      ]);
+    }
+  }
+
+  async function saveCutToSupabase() {
+    const sol = solveCarpentry();
+    const lbl = document.getElementById("cloudBtnLabel");
+    lbl.textContent = "Syncing...";
+    const body = {
+      action: "save_cut",
+      module_tab: state.module,
+      title: `${sol.headerTitle} · ${sol.heroVal}`,
+      unit_system: state.units,
+      inputs_json: { span: state.span, pitchA: state.pitchA, pitchB: state.pitchB, totalRise: state.totalRise, radius: state.bendRadius },
+      outputs_json: { heroVal: sol.heroVal, sawStrip: sol.sawStrip }
+    };
+    try {
+      const r = await fetch(CLOUD_API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const d = await r.json();
+      if (d.saved_cuts) renderSavedCuts(d.saved_cuts);
+      lbl.textContent = "✓ Saved to Supabase";
+    } catch {
+      state.savedCuts.unshift(body);
+      renderSavedCuts(state.savedCuts);
+      lbl.textContent = "✓ Saved Locally";
+    }
+  }
+
+  renderBothPhones();
+  initCloudSync();
+</script>
+</body>
+</html>

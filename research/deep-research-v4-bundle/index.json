@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "study": {
+    "id": 1,
+    "study_id": "bba552d5-21fb-49ed-b3bb-b7d9d87a6fed",
+    "topic": "Best-Performing Construction Calculators & Realistic iOS/Android Emulators",
+    "goal": "Identify exact UI/UX, keypad, and visual diagram mechanics of top-grossing carpentry calculators and realistic iPhone/Android emulators for CutCoach AI",
+    "decision": null,
+    "project_id": "carpenter-calculator-ai",
+    "project_root": "H:\\My Drive\\APEX\\05_Active\\personal\\INSYGHT DIGITAL\\CARPENTER-CALCULATOR-AI",
+    "mission_id": null,
+    "node": null,
+    "lead": "lead-director",
+    "jev_assessment": "skip:exact-ui-and-emulator-benchmark",
+    "created": 1792631055.7160263
+  },
+  "status": {
+    "ok": true,
+    "ready_for_synthesis": true,
+    "coverage": [
+      {
+        "question": "calc-benchmarks.q1",
+        "lane": "calc-benchmarks",
+        "text": "What exact UI layouts, tactile keypad mechanics, 2D/3D visualizers, and workflows make the top-performing construction calculators succeed on site?",
+        "criterion": "At least 2 independent primary/high sources detailing feature sets, UI layouts, and user ratings of leading carpentry calculators",
+        "notes": 3,
+        "independent_sources": 3,
+        "independence_method": "declared-publisher-plus-lead-review",
+        "needed": 2,
+        "strong": 3,
+        "contradicted": false,
+        "state": "answered",
+        "assessment_fresh": true,
+        "assessment": "yes",
+        "rationale": "Three independent primary vendor sources establish the exact keypad, 3D/2D blueprint, cut-list, and offline unit-switching patterns of top construction calculators.",
+        "closed_reason": null,
+        "latest_evidence": 1792631156.1408892
+      },
+      {
+        "question": "mobile-emulators.q1",
+        "lane": "mobile-emulators",
+        "text": "What are the most realistic iPhone and Android emulators and photorealistic device frame systems that can run our calculator app on Vercel and desktop?",
+        "criterion": "At least 2 independent primary/high sources covering cloud OS emulators (Appetize, Expo Snack) and photorealistic web device frames (Devices.css, Apple/Google bezels)",
+        "notes": 2,
+        "independent_sources": 2,
+        "independence_method": "declared-publisher-plus-lead-review",
+        "needed": 2,
+        "strong": 2,
+        "contradicted": false,
+        "state": "answered",
+        "assessment_fresh": true,
+        "assessment": "yes",
+        "rationale": "Two independent sources confirm the exact architecture of realistic iOS Simulator and Android Emulator web embeds and device preview shells.",
+        "closed_reason": null,
+        "latest_evidence": 1792631157.108958
+      }
+    ],
+    "lanes": [
+      {
+        "lane": "calc-benchmarks",
+        "status": "open",
+        "owner": "research-lead",
+        "session": "antigravity:035237ef",
+        "memos": 1,
+        "memo_fresh": true,
+        "sources_read": 3,
+        "saturated": false,
+        "open_questions": []
+      },
+      {
+        "lane": "mobile-emulators",
+        "status": "open",
+        "owner": "research-lead",
+        "session": "antigravity:035237ef",
+        "memos": 1,
+        "memo_fresh": true,
+        "sources_read": 2,
+        "saturated": false,
+        "open_questions": []
+      }
+    ],
+    "jev_assessment": "skip:exact-ui-and-emulator-benchmark",
+    "jev_assessment_recorded": true,
+    "jev_gate_passed": true,
+    "jev_gate_note": "Reference presence only; review linked trial/evaluated-use/reuse/skip. No claim of provider use, valid assessment or savings.",
+    "closed_unanswered": [],
+    "duplicate_reads_prevented": 0,
+    "cross_lane_links": 0,
+    "verifications": 4
+  },
+  "created": 1792631159.1779315,
+  "files": [
+    {
+      "path": "pack.md",
+      "sha256": "f8affef80d7d49104979e0efb0565082e283af6c188453672dbfd003fc6fd967",
+      "owner": "lead-director",
+      "purpose": "Research evidence, provenance and unresolved findings"
+    }
+  ],
+  "index_self": "index.json",
+  "index_parent_action": "Link this immutable bundle from existing project brain index in same work unit."
+}
