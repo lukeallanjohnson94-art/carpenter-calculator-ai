@@ -100,13 +100,13 @@ def install_android_sdk_core() -> dict:
 
 
 def harvest_chippykit_live_bundle() -> dict:
-    """Downloads and dissects the real @chippykit (https://chippykit.com) production bundle."""
+    """Downloads and dissects the real @chippykit (https://chippykit.com.au) production bundle."""
     out_dir = PROJECT_REA_DIR / "chippykit-live"
     out_dir.mkdir(parents=True, exist_ok=True)
-    results = {"url": "https://chippykit.com", "files": []}
+    results = {"url": "https://chippykit.com.au", "files": []}
     try:
         req = urllib.request.Request(
-            "https://chippykit.com",
+            "https://chippykit.com.au",
             headers={"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15"},
         )
         with urllib.request.urlopen(req, timeout=30) as resp:
@@ -118,10 +118,10 @@ def harvest_chippykit_live_bundle() -> dict:
 
         import re
 
-        asset_urls = re.findall(r'(?:src|href)=["\'](/[^"\']+\.(?:js|css|json|webmanifest))["\']', html)
+        asset_urls = re.findall(r'(?:src|href)=["\']([^"\']+\.(?:js|css|json|webmanifest|png|mp4))["\']', html)
         for rel in asset_urls[:12]:
-            full_url = "https://chippykit.com" + rel
-            safe_name = rel.strip("/").replace("/", "_")
+            full_url = rel if rel.startswith("http") else "https://chippykit.com.au/" + rel.lstrip("/")
+            safe_name = rel.split("?")[0].strip("/").replace("/", "_")
             dest = out_dir / safe_name
             try:
                 r2 = urllib.request.Request(full_url, headers={"User-Agent": "Mozilla/5.0"})
